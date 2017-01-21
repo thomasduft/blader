@@ -1,2 +1,2 @@
-# starter
-A simple [angular](https://angular.io/) seed project I use for starting new angular projects. 
+# blader
+Playground for azure portal like blade controls made with angular.
