@@ -1,0 +1,17 @@
+*.swp
+*.*~
+/bin
+/obj
+/dist
+/node_modules
+
+/src/app/**/*.js
+/src/app/**/*.js.map
+/src/app/**/*.d.ts
+/src/app/**/*.metadata.json
+/src/assets/styles/**/*.css
+
+project.lock.json
+.DS_Store
+
+todo.txt

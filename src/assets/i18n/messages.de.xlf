@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="de" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="84c6dc24be3c857d99b9aa09901502deb5d958a8" datatype="html">
+        <source>Hello from starter!</source>
+        <target>Hallo vom starter!</target>
+      </trans-unit>
+      <trans-unit id="c058f9a6816bf27399ba8a44cedca2c67553b5a4" datatype="html">
+        <source>Dynamic echo output: <x id="INTERPOLATION"/></source>
+        <target>Dynamische echo Ausgabe: <x id="INTERPOLATION"/></target>
+        <note priority="1" from="description">Shows a string interpolation sample</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

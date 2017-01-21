@@ -1,0 +1,51 @@
+@import "variables.less";
+
+body {
+	font-family: sans-serif;
+}
+
+.body {
+  position: absolute;
+	top: 0px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+}
+
+.sidebar {
+	background: @sidebar-background;
+	color: @sidebar-color;
+  .sidebar-header,
+  .sidebar-footer {
+    padding: 6px 20px;
+    font-size: .8em;
+    font-weight: bold;
+    min-height: 40px;
+  }
+
+  .sidebar-content {
+    padding: 6px 20px;
+  }
+}
+
+.main {
+  background: @main-background;
+  color: @main-color;
+  .main-header,
+  .main-footer {
+    height: 40px;
+    padding: 6px 20px;
+    font-size: .8em;
+  }
+
+  .main-notification {
+    padding: 5px 20px;
+    font-size: .8em;
+  }
+
+  .content {
+    padding: 6px 20px;
+    background: #fff;
+  }
+}
