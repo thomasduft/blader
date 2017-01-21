@@ -21,7 +21,8 @@ const APP_ROUTES = RouterModule.forRoot([
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
   { path: 'detail', component: DetailComponent },
-  { path: 'host', component: HostComponent }
+  { path: 'host', component: HostComponent },
+  { path: 'host/:entry', component: HostComponent }
 ]);
 
 @NgModule({

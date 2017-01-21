@@ -20,17 +20,19 @@ import {
   </section>`
 })
 export class HostComponent implements OnInit {
-  public blades: Array<IBlade>;
+  public blades: Set<IBlade>;
   public selectedBlade: IBlade;
 
   public ngOnInit(): void {
-    this.blades = new Array<IBlade>();
-    this.blades.push(new HomeBlade());
-    this.blades.push(new ListBlade());
-    this.blades.push(new DetailBlade());
+    this.blades = new Set<IBlade>();
+    this.blades.add(new HomeBlade());
+    this.blades.add(new ListBlade());
+
+    let detailBlade = new DetailBlade();
+    this.blades.add(detailBlade);
 
     // allways the last one should be selected
-    this.selectedBlade = this.blades[2];
+    this.selectedBlade = detailBlade;
   }
 
   public selectBlade(blade: IBlade): void {
@@ -50,6 +52,9 @@ export class HostComponent implements OnInit {
     console.log(`closing blade: ${this.selectedBlade.key}`);
 
     // do all the closing stuff like remove from list, set selectedBlade, etc...
+    if (blade.key === 'HomeBlade') {
+      this.blades.delete(blade);
+    }
   }
 }
 
