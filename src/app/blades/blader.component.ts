@@ -6,6 +6,9 @@ import { IBlade, BladeState, BladeService } from './../blades/index';
 @Component({
   selector: 'tw-blader',
   host: { 'class': 'blader' },
+  providers: [
+    BladeService
+  ],
   template: `
   <section class="blade" 
     *ngFor="let blade of blades">

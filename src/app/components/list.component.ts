@@ -1,6 +1,6 @@
 import { Component, Type } from '@angular/core';
 
-import { IBlade } from './../blades/index';
+import { IBlade, BladeService } from './../blades/index';
 
 @Component({
   selector: 'tw-list',
@@ -10,7 +10,7 @@ import { IBlade } from './../blades/index';
     <li>A</li>
     <li>B</li>
     <li>C</li>
-    <li>D</li>
+    <li (click)="clicked('detail')">Detail</li>
     <li>E</li>
     <li>F</li>
     <li>G</li>
@@ -29,11 +29,15 @@ export class ListComponent implements IBlade {
     return 'ListComponent';
   }
 
-  public get title(): string {
-    return 'List';
-  }
-
   public get component(): Type<any> {
     return ListComponent;
+  }
+
+  public constructor(
+    private _svc: BladeService
+  ) { }
+
+  public clicked(key: string): void {
+    this._svc.executeAction(key);
   }
 }

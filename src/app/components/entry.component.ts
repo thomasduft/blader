@@ -22,8 +22,7 @@ export class EntryComponent implements IBlade {
 
   public constructor(
     private _svc: BladeService
-  ) {
-  }
+  ) { }
 
   public clicked(key: string): void {
     this._svc.executeAction(key);
