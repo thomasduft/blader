@@ -21,9 +21,6 @@ import { IBlade, BladeState } from './models';
     <span (click)="close($event)">
       close
     </span>
-    <h2>
-      {{ blade.title }}
-    </h2>
   </div>
   <div class="blade-content">
     <ng-container *ngComponentOutlet="blade.component"></ng-container>

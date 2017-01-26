@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+
+import { BladeMetaData } from './models';
+
+@Injectable()
+export class BladeRegistryService {
+  private _registry: Map<string, BladeMetaData> = new Map<string, BladeMetaData>();
+
+  public registerBlade(blade: BladeMetaData): void {
+    if (this._registry.has(blade.key)) { return; };
+
+    this._registry.set(blade.key, blade);
+  }
+
+  public exists(key: string): boolean {
+    return this._registry.has(key);
+  }
+
+  public get(key: string): BladeMetaData {
+    let item = this._registry.get(key);
+
+    if (!item) { throw new Error(`BladeInfo for key ${key} was not found!`); }
+
+    return item;
+  }
+}

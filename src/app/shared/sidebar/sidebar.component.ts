@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
        <li routerLinkActive="active"><a routerLink="/home">Home</a></li>
        <li routerLinkActive="active"><a routerLink="/list">List</a></li>
        <li routerLinkActive="active"><a routerLink="/detail">Detail</a></li>
-       <li routerLinkActive="active"><a routerLink="/host">Host</a></li>
+       <li routerLinkActive="active"><a routerLink="/host/entry">Host</a></li>
      </ul>
    </div>
    <div class="sidebar-footer">Sidebar Footer</div>`

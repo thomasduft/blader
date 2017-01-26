@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
+
+import { IBlade } from './../blades/index';
 
 @Component({
   selector: 'tw-list',
@@ -22,5 +24,16 @@ import { Component } from '@angular/core';
     I just listed some characters.
   </p>`
 })
-export class ListComponent {
+export class ListComponent implements IBlade {
+  public get key(): string {
+    return 'ListComponent';
+  }
+
+  public get title(): string {
+    return 'List';
+  }
+
+  public get component(): Type<any> {
+    return ListComponent;
+  }
 }
