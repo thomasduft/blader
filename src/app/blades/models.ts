@@ -9,6 +9,7 @@ export enum BladeState {
 
 export class Blade {
   public id: number;
+  public title: string = 'notitle';
   public constructor(
     public key: string,
     public component: Type<any>) {

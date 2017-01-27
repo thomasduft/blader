@@ -5,7 +5,6 @@ import { Blade, BladeService } from './../blades/index';
 @Component({
   selector: 'tw-entry',
   template: `
-  <h1>Entry blade</h1>
   <ul>
     <li (click)="clicked('list')">List</li>
     <li (click)="clicked('detail')">Detail</li>
@@ -13,6 +12,7 @@ import { Blade, BladeService } from './../blades/index';
 })
 export class EntryComponent implements Blade, OnInit {
   public id: number;
+  public title: string = 'Entry';
 
   public get key(): string {
     return 'EntryComponent';

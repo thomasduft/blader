@@ -32,6 +32,7 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
     <span (click)="close($event)">
       close
     </span>
+    <h3>{{ title }}</h3>
   </div>
   <div class="blade-content">
     <template #bladeContent></template>
@@ -46,6 +47,10 @@ export class BladeComponent implements OnInit, OnDestroy {
   @Output() public closed: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
 
   @ViewChild('bladeContent', { read: ViewContainerRef }) protected bladeContent: ViewContainerRef;
+
+  public get title(): string {
+    return this._componentRef.instance.title;
+  }
 
   public ngOnInit(): void {
     if (this.context) {

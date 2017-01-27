@@ -5,7 +5,6 @@ import { Blade, BladeService } from './../blades/index';
 @Component({
   selector: 'tw-detail',
   template: `
-  <h1>Blader Detail</h1>
   <p>Context ID: {{ id }}</p>
   <h4>Arguments</h4>
   <p>
@@ -17,6 +16,8 @@ import { Blade, BladeService } from './../blades/index';
 })
 export class DetailComponent implements Blade, OnInit, OnDestroy {
   public id: number;
+  public title: string = 'Detail';
+
   public viewDefId: string;
   public objKey: string;
 

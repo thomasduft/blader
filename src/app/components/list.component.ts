@@ -5,7 +5,6 @@ import { Blade, BladeService } from './../blades/index';
 @Component({
   selector: 'tw-list',
   template: `
-  <h1>Blader List</h1>
   <p>Context ID: {{ id }}</p>
   <ul>
     <li>A</li>
@@ -31,6 +30,8 @@ import { Blade, BladeService } from './../blades/index';
 })
 export class ListComponent implements Blade, OnInit {
   public id: number;
+  public title: string = 'List';
+
   public viewDefId: string;
 
   public get key(): string {
@@ -53,8 +54,8 @@ export class ListComponent implements Blade, OnInit {
 
   public clicked(key: string): void {
     this._svc.executeAction(key, [
-        { key: 'viewDefId', value: 'ProductViewDef' },
-        { key: 'objKey', value: 'Product(1)' }
-      ]);
+      { key: 'viewDefId', value: 'ProductViewDef' },
+      { key: 'objKey', value: 'Product(1)' }
+    ]);
   }
 }
