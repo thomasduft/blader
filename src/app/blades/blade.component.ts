@@ -1,6 +1,17 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter,
+  ComponentRef,
+  ViewContainerRef,
+  ComponentFactoryResolver,
+  ViewChild
+} from '@angular/core';
 
-import { IBlade, BladeState } from './models';
+import { BladeContext, IBladeArgs, BladeState } from './models';
 
 @Component({
   selector: 'tw-blade',
@@ -23,19 +34,37 @@ import { IBlade, BladeState } from './models';
     </span>
   </div>
   <div class="blade-content">
-    <ng-container *ngComponentOutlet="blade.component"></ng-container>
+    <template #bladeContent></template>
   </div>`
 })
-export class BladeComponent {
-  @Input() public blade: IBlade;
-  @Output() public selected: EventEmitter<IBlade> = new EventEmitter<IBlade>();
+export class BladeComponent implements OnInit, OnDestroy {
+  private _componentRef: ComponentRef<any>;
+
+  @Input() public context: BladeContext;
   @Output() public stateChanged: EventEmitter<BladeState> = new EventEmitter<BladeState>();
-  @Output() public closed: EventEmitter<IBlade> = new EventEmitter<IBlade>();
+  @Output() public selected: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
+  @Output() public closed: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
+
+  @ViewChild('bladeContent', { read: ViewContainerRef }) protected bladeContent: ViewContainerRef;
+
+  public ngOnInit(): void {
+    if (this.context) {
+      let injector = this.bladeContent.injector;
+      let factory = injector.get(ComponentFactoryResolver).resolveComponentFactory(this.context.blade.component);
+
+      this._componentRef = this.bladeContent.createComponent(factory, this.bladeContent.length);
+      this._componentRef.instance.id = this.context.id;
+    }
+  }
+
+  public ngOnDestroy(): void {
+    // NOP
+  }
 
   public clicked(event: Event): void {
     event.preventDefault();
 
-    this.selected.next(this.blade);
+    this.selected.next(this.context.toBladeArgs());
   }
 
   public changeState(event: Event, state: BladeState): void {
@@ -47,6 +76,6 @@ export class BladeComponent {
   public close(event: Event): void {
     event.preventDefault();
 
-    this.closed.next(this.blade);
+    this.closed.next(this.context.toBladeArgs());
   }
 }

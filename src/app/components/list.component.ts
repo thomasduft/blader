@@ -1,11 +1,12 @@
-import { Component, Type } from '@angular/core';
+import { Component, Type, OnInit } from '@angular/core';
 
-import { IBlade, BladeService } from './../blades/index';
+import { Blade, BladeService } from './../blades/index';
 
 @Component({
   selector: 'tw-list',
   template: `
   <h1>Blader List</h1>
+  <p>Context ID: {{ id }}</p>
   <ul>
     <li>A</li>
     <li>B</li>
@@ -22,9 +23,16 @@ import { IBlade, BladeService } from './../blades/index';
   </ul>
   <p>
     I just listed some characters.
+  </p>
+  <h4>Arguments</h4>
+  <p>
+    ViewDefId: {{ viewDefId }}
   </p>`
 })
-export class ListComponent implements IBlade {
+export class ListComponent implements Blade, OnInit {
+  public id: number;
+  public viewDefId: string;
+
   public get key(): string {
     return 'ListComponent';
   }
@@ -37,7 +45,16 @@ export class ListComponent implements IBlade {
     private _svc: BladeService
   ) { }
 
+  public ngOnInit(): void {
+    console.log(`initialize ${this.key}...`);
+
+    this.viewDefId = this._svc.getParamValue<string>(this.id, 'viewDefId');
+  }
+
   public clicked(key: string): void {
-    this._svc.executeAction(key);
+    this._svc.executeAction(key, [
+        { key: 'viewDefId', value: 'ProductViewDef' },
+        { key: 'objKey', value: 'Product(1)' }
+      ]);
   }
 }

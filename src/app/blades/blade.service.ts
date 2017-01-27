@@ -1,67 +1,86 @@
 import { Injectable } from '@angular/core';
 
-import { IBlade, IBladeContext, IBladeParam, BladeContext, BladeMetaData, UniqueIdCreator } from './models';
+import { BladeParam, Blade, BladeContext, BladeMetaData } from './models';
 import { BladeRegistryService } from './bladeRegistry.service';
 
 @Injectable()
 export class BladeService {
-  private _blades: Map<string, IBladeContext> = new Map<string, IBladeContext>();
+  private _blades: Array<BladeContext> = new Array<BladeContext>();
 
   // TODO: observable subject ???
-  public selected: IBladeContext | undefined;
+  public selected: BladeContext | undefined;
 
-  public get blades(): Array<IBlade> {
-    return Array.from(this._blades.values(), (v: IBladeContext) => {
-      return { key: v.key, component: v.component };
-    });
+  public get blades(): Array<BladeContext> {
+    return this._blades;
   }
 
   public constructor(
     private _registry: BladeRegistryService
   ) { }
 
-  public add(key: string, params?: Array<IBladeParam>): string {
+  public add(key: string, params?: Array<BladeParam>): number {
     // check whether key exists in registry!
     let metaData = this.getMetaData(key);
+    let id = this._blades.length;
+    let blade = new Blade(metaData.key, metaData.component);
+    this._blades.push(new BladeContext(id, blade, params));
 
-    // TODO check also on equal params otherwise a blade shows up only once.
-    if (this._blades.has(key)) { return key; };
-
-    let id = UniqueIdCreator.getGuid();
-
-    this._blades.set(id, new BladeContext(id, metaData.component, params));
     this.select(id);
+
     return id;
   }
 
-  public remove(id: string): boolean {
-    if (this._blades.has(id)) {
-      return this._blades.delete(id);
+  public remove(id: number): void {
+    if (this.exists(id)) {
+      this._blades = this._blades.filter((b: BladeContext) => {
+        return b.id !== id;
+      });
     };
-
-    return false;
   }
 
-  public exists(id: string): boolean {
-    return this._blades.has(id);
+  public exists(id: number): boolean {
+    return this._blades.some((b: BladeContext) => { return b.id === id; });
   }
 
-  public get(id: string): IBladeContext {
-    let item = this._blades.get(id);
+  public get(id: number): BladeContext {
+    let item = this._blades.find((b: BladeContext) => {
+      return b.id === id;
+    });
 
     if (!item) { throw new Error(`BladeData for key ${id} was not found!`); }
 
     return item;
   }
 
-  public select(id: string): void {
-    this.selected = this._blades.get(id);
+  public select(id: number): void {
+    this.selected = this.get(id);
   }
 
-  public executeAction(key: string): void {
+  public executeAction(key: string, params?: Array<BladeParam>): void {
     if (this._registry.exists(key)) {
-      this.add(key);
+      this.add(key, params);
     }
+  }
+
+  public getParamValue<T>(id: number, paramKey: string): any {
+    if (!this.exists(id)) {
+      console.log(`Param ${paramKey} for blade ${id} does not exist!`);
+      return;
+    }
+
+    let ctx = <BladeContext>this.get(id);
+
+    if (!ctx.hasParams) { throw new Error(`Blade ${ctx.blade.key} does not support parameters!`); }
+
+    let param = ctx.params.find((p: BladeParam) => {
+      return p.key === paramKey;
+    });
+
+    if (param) {
+      return <T>param.value;
+    }
+
+    throw new Error(`Param ${paramKey} does not exist!`);
   }
 
   private getMetaData(key: string): BladeMetaData {

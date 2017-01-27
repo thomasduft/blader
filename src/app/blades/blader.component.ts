@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IBlade, BladeState, BladeService } from './../blades/index';
+import { BladeContext, IBladeArgs, BladeState, BladeService } from './../blades/index';
 
 @Component({
   selector: 'tw-blader',
@@ -11,17 +11,17 @@ import { IBlade, BladeState, BladeService } from './../blades/index';
   ],
   template: `
   <section class="blade" 
-    *ngFor="let blade of blades">
-    <tw-blade [blade]="blade" 
-              (selected)="selectBlade($event)"
+    *ngFor="let ctx of bladeContexts">
+    <tw-blade [context]="ctx" 
               (stateChanged)="stateChanged($event)"
+              (selected)="selectBlade($event)"
               (closed)="closed($event)"></tw-blade>
   </section>`
 })
 export class BladerComponent implements OnInit {
-  private _entryComponentId: string;
+  private _entryComponentId: number;
 
-  public get blades(): Array<IBlade> {
+  public get bladeContexts(): Array<BladeContext> {
     return this._svc.blades;
   }
 
@@ -36,24 +36,24 @@ export class BladerComponent implements OnInit {
     });
   }
 
-  public selectBlade(blade: IBlade): void {
-    if (this._svc.selected && blade.key === this._svc.selected.key) { return; }
-
-    this._svc.select(blade.key);
-    console.log(`selected blade: ${blade.key}`);
-  }
-
   public stateChanged(state: BladeState): void {
     if (this._svc.selected) {
-      console.log(`state of blade ${this._svc.selected.key} changed: ${state}`);
+      console.log(`state of blade ${this._svc.selected.blade.key} changed: ${state}`);
     }
   }
 
-  public closed(blade: IBlade): void {
-    if (this._entryComponentId === blade.key) { return; }
+  public selectBlade(args: IBladeArgs): void {
+    if (this._svc.selected && args.id === this._svc.selected.id) { return; }
+
+    this._svc.select(args.id);
+    console.log(`selected blade: ${args.id}`);
+  }
+
+  public closed(args: IBladeArgs): void {
+    if (this._entryComponentId === args.id) { return; }
     // if (this._svc.selected && blade.key !== this._svc.selected.key) { return; }
 
-    console.log(`closing blade: ${blade.key}`);
-    this._svc.remove(blade.key);
+    console.log(`closing blade: ${args.id}`);
+    this._svc.remove(args.id);
   }
 }

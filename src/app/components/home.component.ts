@@ -1,6 +1,6 @@
 import { Component, Type, OnInit, OnDestroy } from '@angular/core';
 
-import { IBlade } from './../blades/index';
+import { Blade } from './../blades/index';
 import { AppService } from './../app.service';
 
 @Component({
@@ -11,7 +11,9 @@ import { AppService } from './../app.service';
      and I appear as single component on the root route 
      or as a blade in the host route.</p>`
 })
-export class HomeComponent implements OnInit, OnDestroy, IBlade {
+export class HomeComponent implements OnInit, OnDestroy, Blade {
+  public id: number;
+
   public get key(): string {
     return 'HomeComponent';
   }

@@ -7,57 +7,52 @@ export enum BladeState {
   maximized = 3,
 }
 
-export interface IBlade {
-  key: string;
-  component: Type<any>;
+export class Blade {
+  public id: number;
+  public constructor(
+    public key: string,
+    public component: Type<any>) {
+  }
 }
 
-export interface IBladeParam {
-  key: string;
-  value: any;
+export class BladeParam {
+  public key: string;
+  public value: any;
 }
 
-export interface IBladeContext {
-  key: string;
-  component: Type<any>;
-  params?: Array<IBladeParam>;
+export interface IBladeArgs {
+  id: number;
+  blade: Blade;
 }
 
-export class BladeContext implements IBladeContext {
+export class BladeContext {
+  private _params: Array<BladeParam>;
+
   public get hasParams(): boolean {
-    return this.params ? this.params.length > 0 : false;
+    return this._params.length > 0;
+  }
+
+  public get params(): Array<BladeParam> {
+    return this._params;
   }
 
   public constructor(
-    public key: string,
-    public component: Type<any>,
-    public params?: Array<IBladeParam>
+    public id: number,
+    public blade: Blade,
+    params?: Array<BladeParam>
   ) {
-    if (!params) {
-      this.params = new Array<IBladeParam>();
+    if (params) {
+      this._params = params;
+    } else {
+      this._params = new Array<BladeParam>();
     }
+  }
+
+  public toBladeArgs(): IBladeArgs {
+    return { id: this.id, blade: this.blade };
   }
 }
 
 export class BladeMetaData {
   public constructor(public key: string, public component: Type<any>) { }
-}
-
-export class UniqueIdCreator {
-  /**
-   * Returns a unique id -> guid
-   * 
-   * @returns string
-   */
-  public static getGuid(): string {
-    let date = new Date().getTime();
-    let guid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      /* tslint:disable */
-      let random = (date + Math.random() * 16) % 16 | 0;
-      date = Math.floor(date / 16);
-      return (c === 'x' ? random : (random & 0x3 | 0x8)).toString(16);
-      /* tslint:enable */
-    });
-    return guid;
-  }
 }

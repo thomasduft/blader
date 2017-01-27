@@ -1,6 +1,6 @@
-import { Component, Type } from '@angular/core';
+import { Component, Type, OnInit } from '@angular/core';
 
-import { IBlade, BladeService } from './../blades/index';
+import { Blade, BladeService } from './../blades/index';
 
 @Component({
   selector: 'tw-entry',
@@ -11,7 +11,9 @@ import { IBlade, BladeService } from './../blades/index';
     <li (click)="clicked('detail')">Detail</li>
   </ul>`
 })
-export class EntryComponent implements IBlade {
+export class EntryComponent implements Blade, OnInit {
+  public id: number;
+
   public get key(): string {
     return 'EntryComponent';
   }
@@ -24,7 +26,20 @@ export class EntryComponent implements IBlade {
     private _svc: BladeService
   ) { }
 
+  public ngOnInit(): void {
+    console.log(`initialize ${this.key}...`);
+  }
+
   public clicked(key: string): void {
-    this._svc.executeAction(key);
+    if (key === 'list') {
+      this._svc.executeAction(key, [
+        { key: 'viewDefId', value: 'ProductListViewDef' }
+      ]);
+    } else {
+      this._svc.executeAction(key, [
+        { key: 'viewDefId', value: 'ProductViewDef' },
+        { key: 'objKey', value: 'Product(1)' }
+      ]);
+    }
   }
 }
