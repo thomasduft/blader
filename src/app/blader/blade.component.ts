@@ -29,7 +29,7 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
     <span (click)="changeState($event, 3)">
       maximize
     </span>
-    <span *ngIf="!isDirty" (click)="close($event)">
+    <span *ngIf="!closeIsHidden" (click)="close($event)">
       close
     </span>
     <h3>{{ title }}</h3>
@@ -41,20 +41,32 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
 export class BladeComponent implements OnInit, OnDestroy {
   private _componentRef: ComponentRef<any>;
 
-  @Input() public context: BladeContext;
-  @Output() public stateChanged: EventEmitter<BladeState> = new EventEmitter<BladeState>();
-  @Output() public selected: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
-  @Output() public closed: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
+  @Input()
+  public context: BladeContext;
 
-  @ViewChild('bladeContent', { read: ViewContainerRef }) protected bladeContent: ViewContainerRef;
+  @Output()
+  public stateChanged: EventEmitter<BladeState> = new EventEmitter<BladeState>();
+
+  @Output()
+  public selected: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
+
+  @Output()
+  public closed: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
 
   public get title(): string {
     return this._componentRef.instance.title;
   }
 
-  public get isDirty(): boolean {
+  public get closeIsHidden(): boolean {
+    if (this.context.isEntry) {
+      return true;
+    }
+
     return this._componentRef.instance.isDirty;
   }
+
+  @ViewChild('bladeContent', { read: ViewContainerRef })
+  protected bladeContent: ViewContainerRef;
 
   public ngOnInit(): void {
     if (this.context) {
@@ -67,7 +79,9 @@ export class BladeComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    // NOP
+    if (this._componentRef) {
+      this._componentRef.destroy();
+    }
   }
 
   public clicked(event: Event): void {

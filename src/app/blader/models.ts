@@ -9,7 +9,7 @@ export enum BladeState {
 
 export class Blade {
   public id: number;
-  public title: string = 'notitle';
+  public title: string;
   public isDirty: boolean = false;
   public constructor(
     public key: string,
@@ -37,6 +37,8 @@ export class BladeContext {
   public get params(): Array<BladeParam> {
     return this._params;
   }
+
+  public isEntry: boolean = false;
 
   public constructor(
     public id: number,

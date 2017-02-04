@@ -21,9 +21,13 @@ export class BladeService {
   public add(key: string, params?: Array<BladeParam>): number {
     // check whether key exists in registry!
     let metaData = this.getMetaData(key);
-    let id = this._blades.length;
+
+    let id = new Date().valueOf();
     let blade = new Blade(metaData.key, metaData.component);
-    this._blades.push(new BladeContext(id, blade, params));
+
+    let ctx = new BladeContext(id, blade, params);
+    ctx.isEntry = this._blades.length === 0;
+    this._blades.push(ctx);
 
     this.select(id);
 
