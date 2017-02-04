@@ -1,6 +1,6 @@
 import { Component, Type, OnInit, OnDestroy } from '@angular/core';
 
-import { Blade, BladeService } from './../blades/index';
+import { Blade, BladeService } from './../blader/index';
 
 @Component({
   selector: 'tw-detail',
@@ -12,11 +12,13 @@ import { Blade, BladeService } from './../blades/index';
   </p>
   <p>
     ObjKey: {{ objKey }}
-  </p>`
+  </p>
+  <p (click)="newTitle()">{{ title }}</p>`
 })
 export class DetailComponent implements Blade, OnInit, OnDestroy {
   public id: number;
   public title: string = 'Detail';
+  public isDirty: boolean = false;
 
   public viewDefId: string;
   public objKey: string;
@@ -42,5 +44,10 @@ export class DetailComponent implements Blade, OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     console.log(`destroying ${this.key}...`);
+  }
+
+  public newTitle(): void {
+    this.title = new Date().toDateString();
+    this.isDirty = true;
   }
 }

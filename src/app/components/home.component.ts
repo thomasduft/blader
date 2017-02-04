@@ -1,6 +1,6 @@
 import { Component, Type, OnInit, OnDestroy } from '@angular/core';
 
-import { Blade } from './../blades/index';
+import { Blade } from './../blader/index';
 import { AppService } from './../app.service';
 
 @Component({
@@ -14,6 +14,7 @@ import { AppService } from './../app.service';
 export class HomeComponent implements OnInit, OnDestroy, Blade {
   public id: number;
   public title: string = 'Home blade';
+  public isDirty: boolean = false;
 
   public get key(): string {
     return 'HomeComponent';

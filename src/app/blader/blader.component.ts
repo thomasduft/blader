@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { BladeContext, IBladeArgs, BladeState, BladeService } from './../blades/index';
+import {
+  BladeContext,
+  IBladeArgs,
+  BladeState,
+  BladeService
+} from './../blader/index';
 
 @Component({
   selector: 'tw-blader',

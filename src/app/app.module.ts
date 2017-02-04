@@ -15,26 +15,24 @@ import {
   EntryComponent
 } from './components/index';
 import {
-  BladerComponent,
-  BladeComponent,
+  BladerModule,
   BladeRegistryService,
-  BladeService,
   BladeMetaData
-} from './blades/index';
+} from './blader/index';
 
 const APP_ROUTES = RouterModule.forRoot([
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
-  { path: 'detail', component: DetailComponent },
-  { path: 'blader/:entry', component: BladerComponent }
+  { path: 'detail', component: DetailComponent }
 ]);
 
 @NgModule({
   imports: [
     BrowserModule,
     HttpModule,
-    APP_ROUTES
+    APP_ROUTES,
+    BladerModule
   ],
   declarations: [
     AppComponent,
@@ -43,9 +41,7 @@ const APP_ROUTES = RouterModule.forRoot([
     HomeComponent,
     EntryComponent,
     ListComponent,
-    DetailComponent,
-    BladerComponent,
-    BladeComponent
+    DetailComponent
   ],
   entryComponents: [
     EntryComponent
@@ -54,9 +50,7 @@ const APP_ROUTES = RouterModule.forRoot([
   providers: [
     RESOURCE_CACHE_PROVIDER,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: AppService, useClass: AppService },
-    { provide: BladeRegistryService, useClass: BladeRegistryService },
-    { provide: BladeService, useClass: BladeService }
+    { provide: AppService, useClass: AppService }
   ]
 })
 export class AppModule {

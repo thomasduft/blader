@@ -1,6 +1,6 @@
 import { Component, Type, OnInit } from '@angular/core';
 
-import { Blade, BladeService } from './../blades/index';
+import { Blade, BladeService } from './../blader/index';
 
 @Component({
   selector: 'tw-list',
@@ -31,6 +31,7 @@ import { Blade, BladeService } from './../blades/index';
 export class ListComponent implements Blade, OnInit {
   public id: number;
   public title: string = 'List';
+  public isDirty: boolean = false;
 
   public viewDefId: string;
 

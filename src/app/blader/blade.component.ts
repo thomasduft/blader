@@ -29,7 +29,7 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
     <span (click)="changeState($event, 3)">
       maximize
     </span>
-    <span (click)="close($event)">
+    <span *ngIf="!isDirty" (click)="close($event)">
       close
     </span>
     <h3>{{ title }}</h3>
@@ -50,6 +50,10 @@ export class BladeComponent implements OnInit, OnDestroy {
 
   public get title(): string {
     return this._componentRef.instance.title;
+  }
+
+  public get isDirty(): boolean {
+    return this._componentRef.instance.isDirty;
   }
 
   public ngOnInit(): void {

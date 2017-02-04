@@ -1,6 +1,6 @@
 import { Component, Type, OnInit } from '@angular/core';
 
-import { Blade, BladeService } from './../blades/index';
+import { Blade, BladeService } from './../blader/index';
 
 @Component({
   selector: 'tw-entry',
@@ -13,6 +13,7 @@ import { Blade, BladeService } from './../blades/index';
 export class EntryComponent implements Blade, OnInit {
   public id: number;
   public title: string = 'Entry';
+  public isDirty: boolean = false;
 
   public get key(): string {
     return 'EntryComponent';
