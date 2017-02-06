@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import {
   BladeContext,
   IBladeArgs,
   BladeState,
-  BladeManager
+  BladeManager,
+  BladeComponent
 } from './../blader/index';
 
 @Component({
@@ -15,16 +16,18 @@ import {
     BladeManager
   ],
   template: `
-  <section class="blade" 
-    *ngFor="let ctx of bladeContexts">
-    <tw-blade [context]="ctx" 
-              (stateChanged)="stateChanged($event)"
-              (selected)="selectBlade($event)"
-              (closed)="closed($event)"></tw-blade>
-  </section>`
+  <tw-blade *ngFor="let ctx of bladeContexts"
+            [context]="ctx" 
+            (stateChanged)="stateChanged($event)"
+            (selected)="selectBlade($event)"
+            (closed)="closed($event)">
+  </tw-blade>`
 })
 export class BladerComponent implements OnInit {
   private _entryComponentId: number;
+
+  @ViewChildren(BladeComponent)
+  private _blades: QueryList<BladeComponent>;
 
   public get bladeContexts(): Array<BladeContext> {
     return this._mgr.blades;
@@ -56,9 +59,20 @@ export class BladerComponent implements OnInit {
 
   public closed(args: IBladeArgs): void {
     if (this._entryComponentId === args.id) { return; }
-    // if (this._svc.selected && blade.key !== this._svc.selected.key) { return; }
 
+    console.log(`can close: ${this.canClose()}`);
     console.log(`closing blade: ${args.id}`);
     this._mgr.remove(args.id);
+  }
+
+  private canClose(): boolean {
+    if (this._blades) {
+      let blades = this._blades.toArray();
+      return !blades.some((b: BladeComponent) => {
+        return b.isDirty;
+      });
+    }
+
+    return true;
   }
 }

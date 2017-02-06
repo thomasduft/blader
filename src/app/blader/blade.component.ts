@@ -15,6 +15,7 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
 
 @Component({
   selector: 'tw-blade',
+  host: { 'class': 'blade' },
   template: `
   <div class="blade-header" (click)="clicked($event)">
     <span (click)="changeState($event, 0)">
@@ -57,12 +58,16 @@ export class BladeComponent implements OnInit, OnDestroy {
     return this._componentRef.instance.title;
   }
 
+  public get isDirty(): boolean {
+    return this._componentRef.instance.isDirty;
+  }
+
   public get closeIsHidden(): boolean {
     if (this.context.isEntry) {
       return true;
     }
 
-    return this._componentRef.instance.isDirty;
+    return this.isDirty;
   }
 
   @ViewChild('bladeContent', { read: ViewContainerRef })
