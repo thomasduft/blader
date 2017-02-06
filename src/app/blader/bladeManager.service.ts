@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { BladeParam, Blade, BladeContext, BladeMetaData } from './models';
-import { BladeRegistryService } from './bladeRegistry.service';
+import { BladeRegistry } from './bladeRegistry.service';
 
 @Injectable()
-export class BladeService {
+export class BladeManager {
   private _blades: Array<BladeContext> = new Array<BladeContext>();
 
   // TODO: observable subject ???
@@ -15,7 +15,7 @@ export class BladeService {
   }
 
   public constructor(
-    private _registry: BladeRegistryService
+    private _registry: BladeRegistry
   ) { }
 
   public add(key: string, params?: Array<BladeParam>): number {

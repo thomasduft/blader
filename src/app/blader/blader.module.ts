@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import {
   BladerComponent,
   BladeComponent,
-  BladeRegistryService,
-  BladeService,
+  BladeRegistry,
+  BladeManager,
 } from './index';
 
 const BLADER_ROUTES = RouterModule.forChild([
@@ -23,8 +23,8 @@ const BLADER_ROUTES = RouterModule.forChild([
     BladeComponent
   ],
   providers: [
-    { provide: BladeRegistryService, useClass: BladeRegistryService },
-    { provide: BladeService, useClass: BladeService }
+    { provide: BladeRegistry, useClass: BladeRegistry },
+    { provide: BladeManager, useClass: BladeManager }
   ]
 })
 export class BladerModule {

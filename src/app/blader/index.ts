@@ -1,5 +1,5 @@
 export * from './models';
-export * from './blade.service';
+export * from './bladeManager.service';
 export * from './bladeRegistry.service';
 export * from './blader.component';
 export * from './blade.component';

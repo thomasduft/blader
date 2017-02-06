@@ -5,14 +5,14 @@ import {
   BladeContext,
   IBladeArgs,
   BladeState,
-  BladeService
+  BladeManager
 } from './../blader/index';
 
 @Component({
   selector: 'tw-blader',
   host: { 'class': 'blader' },
   providers: [
-    BladeService
+    BladeManager
   ],
   template: `
   <section class="blade" 
@@ -27,30 +27,30 @@ export class BladerComponent implements OnInit {
   private _entryComponentId: number;
 
   public get bladeContexts(): Array<BladeContext> {
-    return this._svc.blades;
+    return this._mgr.blades;
   }
 
   public constructor(
     private _route: ActivatedRoute,
-    private _svc: BladeService
+    private _mgr: BladeManager
   ) { }
 
   public ngOnInit(): void {
     this._route.params.subscribe((params: { entry: string }) => {
-      this._entryComponentId = this._svc.add(params.entry);
+      this._entryComponentId = this._mgr.add(params.entry);
     });
   }
 
   public stateChanged(state: BladeState): void {
-    if (this._svc.selected) {
-      console.log(`state of blade ${this._svc.selected.blade.key} changed: ${state}`);
+    if (this._mgr.selected) {
+      console.log(`state of blade ${this._mgr.selected.blade.key} changed: ${state}`);
     }
   }
 
   public selectBlade(args: IBladeArgs): void {
-    if (this._svc.selected && args.id === this._svc.selected.id) { return; }
+    if (this._mgr.selected && args.id === this._mgr.selected.id) { return; }
 
-    this._svc.select(args.id);
+    this._mgr.select(args.id);
     console.log(`selected blade: ${args.id}`);
   }
 
@@ -59,6 +59,6 @@ export class BladerComponent implements OnInit {
     // if (this._svc.selected && blade.key !== this._svc.selected.key) { return; }
 
     console.log(`closing blade: ${args.id}`);
-    this._svc.remove(args.id);
+    this._mgr.remove(args.id);
   }
 }

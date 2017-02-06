@@ -1,6 +1,6 @@
 import { Component, Type, OnInit } from '@angular/core';
 
-import { Blade, BladeService } from './../blader/index';
+import { Blade, BladeManager } from './../blader/index';
 
 @Component({
   selector: 'tw-list',
@@ -44,17 +44,17 @@ export class ListComponent implements Blade, OnInit {
   }
 
   public constructor(
-    private _svc: BladeService
+    private _mgr: BladeManager
   ) { }
 
   public ngOnInit(): void {
     console.log(`initialize ${this.key}...`);
 
-    this.viewDefId = this._svc.getParamValue<string>(this.id, 'viewDefId');
+    this.viewDefId = this._mgr.getParamValue<string>(this.id, 'viewDefId');
   }
 
   public clicked(key: string): void {
-    this._svc.executeAction(key, [
+    this._mgr.executeAction(key, [
       { key: 'viewDefId', value: 'ProductViewDef' },
       { key: 'objKey', value: 'Product(1)' }
     ]);

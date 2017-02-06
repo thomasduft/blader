@@ -1,6 +1,6 @@
 import { Component, Type, OnInit } from '@angular/core';
 
-import { Blade, BladeService } from './../blader/index';
+import { Blade, BladeManager } from './../blader/index';
 
 @Component({
   selector: 'tw-entry',
@@ -24,7 +24,7 @@ export class EntryComponent implements Blade, OnInit {
   }
 
   public constructor(
-    private _svc: BladeService
+    private _mgr: BladeManager
   ) { }
 
   public ngOnInit(): void {
@@ -33,11 +33,11 @@ export class EntryComponent implements Blade, OnInit {
 
   public clicked(key: string): void {
     if (key === 'list') {
-      this._svc.executeAction(key, [
+      this._mgr.executeAction(key, [
         { key: 'viewDefId', value: 'ProductListViewDef' }
       ]);
     } else {
-      this._svc.executeAction(key, [
+      this._mgr.executeAction(key, [
         { key: 'viewDefId', value: 'ProductViewDef' },
         { key: 'objKey', value: 'Product(1)' }
       ]);

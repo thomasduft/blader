@@ -1,7 +1,6 @@
-import { Component, Type, OnInit, OnDestroy } from '@angular/core';
+import { Component, Type, OnDestroy } from '@angular/core';
 
 import { Blade } from './../blader/index';
-import { AppService } from './../app.service';
 
 @Component({
   selector: 'tw-home',
@@ -11,7 +10,7 @@ import { AppService } from './../app.service';
      and I appear as single component on the root route 
      or as a blade in the host route.</p>`
 })
-export class HomeComponent implements OnInit, OnDestroy, Blade {
+export class HomeComponent implements OnDestroy, Blade {
   public id: number;
   public title: string = 'Home blade';
   public isDirty: boolean = false;
@@ -22,14 +21,6 @@ export class HomeComponent implements OnInit, OnDestroy, Blade {
 
   public get component(): Type<any> {
     return HomeComponent;
-  }
-
-  public constructor(
-    private _appService: AppService
-  ) { }
-
-  public ngOnInit(): void {
-    console.log(this._appService.echo('hi from HomeComponent'));
   }
 
   public ngOnDestroy(): void {

@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { BladeMetaData } from './models';
 
 @Injectable()
-export class BladeRegistryService {
+export class BladeRegistry {
   private _registry: Map<string, BladeMetaData> = new Map<string, BladeMetaData>();
 
-  public registerBlade(blade: BladeMetaData): void {
+  public register(blade: BladeMetaData): void {
     if (this._registry.has(blade.key)) { return; };
 
     this._registry.set(blade.key, blade);

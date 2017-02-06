@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { SidebarComponent, WorkspaceComponent } from './shared/index';
-import { AppService } from './app.service';
 import {
   HomeComponent,
   ListComponent,
@@ -16,7 +15,7 @@ import {
 } from './components/index';
 import {
   BladerModule,
-  BladeRegistryService,
+  BladeRegistry,
   BladeMetaData
 } from './blader/index';
 
@@ -49,16 +48,15 @@ const APP_ROUTES = RouterModule.forRoot([
   bootstrap: [AppComponent],
   providers: [
     RESOURCE_CACHE_PROVIDER,
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: AppService, useClass: AppService }
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ]
 })
 export class AppModule {
   public constructor(
-    private _bladeRegistry: BladeRegistryService
+    private _bladeRegistry: BladeRegistry
   ) {
-    this._bladeRegistry.registerBlade(new BladeMetaData('entry', EntryComponent));
-    this._bladeRegistry.registerBlade(new BladeMetaData('list', ListComponent));
-    this._bladeRegistry.registerBlade(new BladeMetaData('detail', DetailComponent));
+    this._bladeRegistry.register(new BladeMetaData('entry', EntryComponent));
+    this._bladeRegistry.register(new BladeMetaData('list', ListComponent));
+    this._bladeRegistry.register(new BladeMetaData('detail', DetailComponent));
   }
 }

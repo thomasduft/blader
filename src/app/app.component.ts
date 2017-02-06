@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { AppService } from './app.service';
-
 @Component({
   selector: 'app',
   template: `
@@ -11,13 +9,4 @@ import { AppService } from './app.service';
   </div>`
 })
 export class AppComponent {
-  public echo: string = '';
-
-  public constructor(
-    private _svc: AppService
-  ) { }
-
-  public ngOnInit(): void {
-    this.echo = this._svc.echo('Hi there!');
-  }
 }
