@@ -62,20 +62,8 @@ export class BladerComponent implements OnInit {
   public closed(args: IBladeArgs): void {
     if (this._entryComponentId === args.id) { return; }
 
-    console.log(`can close: ${this.canClose()}`);
     console.log(`closing blade: ${args.id}`);
     this._mgr.remove(args.id);
-  }
-
-  public canClose(): boolean {
-    if (this._blades) {
-      let blades = this._blades.toArray();
-      return !blades.some((b: BladeComponent) => {
-        return b.isDirty;
-      });
-    }
-
-    return true;
   }
 
   public getDirtyBlades(): Array<BladeComponent> {
