@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
+
+import { Component, Injectable, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { ActivatedRoute, CanDeactivate } from '@angular/router';
 
 import {
   BladeContext,
@@ -65,7 +67,7 @@ export class BladerComponent implements OnInit {
     this._mgr.remove(args.id);
   }
 
-  private canClose(): boolean {
+  public canClose(): boolean {
     if (this._blades) {
       let blades = this._blades.toArray();
       return !blades.some((b: BladeComponent) => {
@@ -75,4 +77,30 @@ export class BladerComponent implements OnInit {
 
     return true;
   }
+
+  public getDirtyBlades(): Array<BladeComponent> {
+    let blades = this._blades.toArray();
+    return blades.filter((b: BladeComponent) => {
+      return b.isDirty;
+    });
+  }
 }
+
+@Injectable()
+export class CanDeactivateBladerComponent implements CanDeactivate<BladerComponent> {
+  public canDeactivate(component: BladerComponent): Observable<boolean> | Promise<boolean> | boolean {
+
+    let canClose = true;
+    let dirtyBlades = component.getDirtyBlades();
+    if (dirtyBlades.length > 0) {
+      canClose = false;
+      let msg = dirtyBlades.map((b: BladeComponent) => {
+        return b.title;
+      }).join(', ');
+      alert(`Please save or undo your work on the blades:\n ${msg}`);
+    }
+
+    return canClose;
+  }
+}
+

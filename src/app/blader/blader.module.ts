@@ -7,10 +7,11 @@ import {
   BladeComponent,
   BladeRegistry,
   BladeManager,
+  CanDeactivateBladerComponent
 } from './index';
 
 const BLADER_ROUTES = RouterModule.forChild([
-  { path: 'blader/:entry', component: BladerComponent }
+  { path: 'blader/:entry', component: BladerComponent, canDeactivate: [CanDeactivateBladerComponent] }
 ]);
 
 @NgModule({
@@ -24,7 +25,8 @@ const BLADER_ROUTES = RouterModule.forChild([
   ],
   providers: [
     { provide: BladeRegistry, useClass: BladeRegistry },
-    { provide: BladeManager, useClass: BladeManager }
+    { provide: BladeManager, useClass: BladeManager },
+    { provide: CanDeactivateBladerComponent, useClass: CanDeactivateBladerComponent }
   ]
 })
 export class BladerModule {
