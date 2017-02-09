@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BladeParam, Blade, BladeContext, BladeMetaData } from './models';
+import { BladeParam, BladeContext, BladeMetaData } from './models';
 import { BladeRegistry } from './bladeRegistry.service';
 
 @Injectable()
@@ -23,9 +23,8 @@ export class BladeManager {
     let metaData = this.getMetaData(key);
 
     let id = new Date().valueOf();
-    let blade = new Blade(metaData.key, metaData.component);
+    let ctx = new BladeContext(id, metaData, params);
 
-    let ctx = new BladeContext(id, blade, params);
     ctx.isEntry = this._blades.length === 0;
     this._blades.push(ctx);
 
@@ -74,7 +73,7 @@ export class BladeManager {
 
     let ctx = <BladeContext>this.get(id);
 
-    if (!ctx.hasParams) { throw new Error(`Blade ${ctx.blade.key} does not support parameters!`); }
+    if (!ctx.hasParams) { throw new Error(`Blade ${ctx.metaData.key} does not support parameters!`); }
 
     let param = ctx.params.find((p: BladeParam) => {
       return p.key === paramKey;

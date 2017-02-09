@@ -1,20 +1,16 @@
 import { Type } from '@angular/core';
 
+export interface IBladeComponent {
+  id: number;
+  title: string;
+  isDirty: boolean;
+}
+
 export enum BladeState {
   minimized = 0,
   simple = 1,
   normal = 2,
   maximized = 3,
-}
-
-export class Blade {
-  public id: number;
-  public title: string;
-  public isDirty: boolean = false;
-  public constructor(
-    public key: string,
-    public component: Type<any>) {
-  }
 }
 
 export class BladeParam {
@@ -24,7 +20,7 @@ export class BladeParam {
 
 export interface IBladeArgs {
   id: number;
-  blade: Blade;
+  metaData: BladeMetaData;
 }
 
 export class BladeContext {
@@ -42,7 +38,7 @@ export class BladeContext {
 
   public constructor(
     public id: number,
-    public blade: Blade,
+    public metaData: BladeMetaData,
     params?: Array<BladeParam>
   ) {
     if (params) {
@@ -53,7 +49,7 @@ export class BladeContext {
   }
 
   public toBladeArgs(): IBladeArgs {
-    return { id: this.id, blade: this.blade };
+    return { id: this.id, metaData: this.metaData };
   }
 }
 

@@ -76,15 +76,19 @@ export class BladeComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     if (this.context) {
       let injector = this.bladeContent.injector;
-      let factory = injector.get(ComponentFactoryResolver).resolveComponentFactory(this.context.blade.component);
+      let factory = injector.get(ComponentFactoryResolver).resolveComponentFactory(this.context.metaData.component);
 
       this._componentRef = this.bladeContent.createComponent(factory, this.bladeContent.length);
       this._componentRef.instance.id = this.context.id;
+
+      console.log(`initialized ${this.title}`);
     }
   }
 
   public ngOnDestroy(): void {
     if (this._componentRef) {
+      console.log(`destroying ${this.title}`);
+
       this._componentRef.destroy();
     }
   }

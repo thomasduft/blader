@@ -48,7 +48,7 @@ export class BladerComponent implements OnInit {
 
   public stateChanged(state: BladeState): void {
     if (this._mgr.selected) {
-      console.log(`state of blade ${this._mgr.selected.blade.key} changed: ${state}`);
+      console.log(`state of blade ${this._mgr.selected.metaData.key} changed: ${state}`);
     }
   }
 

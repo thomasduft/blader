@@ -1,6 +1,6 @@
-import { Component, Type, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Blade, BladeManager } from './../blader/index';
+import { IBladeComponent, BladeManager } from './../blader/index';
 
 @Component({
   selector: 'tw-list',
@@ -28,28 +28,18 @@ import { Blade, BladeManager } from './../blader/index';
     ViewDefId: {{ viewDefId }}
   </p>`
 })
-export class ListComponent implements Blade, OnInit {
+export class ListComponent implements IBladeComponent, OnInit {
   public id: number;
   public title: string = 'List';
   public isDirty: boolean = false;
 
   public viewDefId: string;
 
-  public get key(): string {
-    return 'ListComponent';
-  }
-
-  public get component(): Type<any> {
-    return ListComponent;
-  }
-
   public constructor(
     private _mgr: BladeManager
   ) { }
 
   public ngOnInit(): void {
-    console.log(`initialize ${this.key}...`);
-
     this.viewDefId = this._mgr.getParamValue<string>(this.id, 'viewDefId');
   }
 

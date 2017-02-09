@@ -1,6 +1,6 @@
-import { Component, Type, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { Blade, BladeManager } from './../blader/index';
+import { IBladeComponent, BladeManager } from './../blader/index';
 
 @Component({
   selector: 'tw-entry',
@@ -10,26 +10,14 @@ import { Blade, BladeManager } from './../blader/index';
     <li (click)="clicked('detail')">Detail</li>
   </ul>`
 })
-export class EntryComponent implements Blade, OnInit {
+export class EntryComponent implements IBladeComponent {
   public id: number;
   public title: string = 'Entry';
   public isDirty: boolean = false;
 
-  public get key(): string {
-    return 'EntryComponent';
-  }
-
-  public get component(): Type<any> {
-    return EntryComponent;
-  }
-
   public constructor(
     private _mgr: BladeManager
   ) { }
-
-  public ngOnInit(): void {
-    console.log(`initialize ${this.key}...`);
-  }
 
   public clicked(key: string): void {
     if (key === 'list') {
