@@ -68,6 +68,7 @@ export class BladeManager {
       this._blades = this._blades.filter((b: BladeContext) => {
         return b.id !== id;
       });
+      sessionStorage.setItem(BladeManager.BLADER_HISTORY_KEY, JSON.stringify(this._blades));
     };
   }
 
