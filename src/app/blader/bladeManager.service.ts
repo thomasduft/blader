@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
+// import { Router } from '@angular/router';
 
 import { BladeParam, BladeContext, BladeMetaData } from './models';
 import { BladeRegistry } from './bladeRegistry.service';
 
 @Injectable()
 export class BladeManager {
+  private static BLADER_HISTORY_KEY = 'bladerHistory';
+
   private _blades: Array<BladeContext> = new Array<BladeContext>();
+
+  public entryId: number;
 
   // TODO: observable subject ???
   public selected: BladeContext | undefined;
@@ -14,23 +19,48 @@ export class BladeManager {
     return this._blades;
   }
 
+  public get mustRestore(): boolean {
+    return sessionStorage.getItem(BladeManager.BLADER_HISTORY_KEY) !== null;
+  }
+
   public constructor(
     private _registry: BladeRegistry
   ) { }
 
-  public add(key: string, params?: Array<BladeParam>): number {
+  public add(key: string, params?: Array<BladeParam>, id?: number): number {
     // check whether key exists in registry!
     let metaData = this.getMetaData(key);
 
-    let id = new Date().valueOf();
-    let ctx = new BladeContext(id, metaData, params);
+    let newId = id ? id : new Date().valueOf();
+    let ctx = new BladeContext(newId, metaData, params);
 
     ctx.isEntry = this._blades.length === 0;
+    if (ctx.isEntry) {
+      this.entryId = newId;
+    }
     this._blades.push(ctx);
+    sessionStorage.setItem(BladeManager.BLADER_HISTORY_KEY, JSON.stringify(this._blades));
 
-    this.select(id);
+    return newId;
+  }
 
-    return id;
+  public restore(): void {
+    let history = sessionStorage.getItem(BladeManager.BLADER_HISTORY_KEY);
+    if (!history) { return; }
+
+    // this._blades = new Array<BladeContext>();
+
+    let historyCtx: Array<BladeContext> = JSON.parse(history);
+    historyCtx.forEach((b: BladeContext) => {
+      if (b.isEntry) {
+        this.entryId = b.id;
+      }
+      this.add(b.metaData.key, b.params, b.id);
+    });
+  }
+
+  public reset(): void {
+    sessionStorage.removeItem(BladeManager.BLADER_HISTORY_KEY);
   }
 
   public remove(id: number): void {
@@ -83,7 +113,7 @@ export class BladeManager {
       return <T>param.value;
     }
 
-    throw new Error(`Param ${paramKey} does not exist!`);
+    throw new Error(`Param ${paramKey} for ${id} does not exist!`);
   }
 
   private getMetaData(key: string): BladeMetaData {

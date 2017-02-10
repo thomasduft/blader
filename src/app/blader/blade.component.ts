@@ -81,7 +81,7 @@ export class BladeComponent implements OnInit, OnDestroy {
       this._componentRef = this.bladeContent.createComponent(factory, this.bladeContent.length);
       this._componentRef.instance.id = this.context.id;
 
-      console.log(`initialized ${this.title}`);
+      console.log(`initialized ${this.title}`, this.context.id);
     }
   }
 

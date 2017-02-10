@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 
-import { Component, Injectable, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute, CanDeactivate } from '@angular/router';
 
 import {
@@ -25,7 +25,7 @@ import {
             (closed)="closed($event)">
   </tw-blade>`
 })
-export class BladerComponent implements OnInit {
+export class BladerComponent implements OnInit, OnDestroy {
   private _entryComponentId: number;
 
   @ViewChildren(BladeComponent)
@@ -42,8 +42,17 @@ export class BladerComponent implements OnInit {
 
   public ngOnInit(): void {
     this._route.params.subscribe((params: { entry: string }) => {
-      this._entryComponentId = this._mgr.add(params.entry);
+      if (this._mgr.mustRestore) {
+        this._mgr.restore();
+      } else {
+        this._mgr.add(params.entry);
+      }
+      this._entryComponentId = this._mgr.entryId;
     });
+  }
+
+  public ngOnDestroy(): void {
+    this._mgr.reset();
   }
 
   public stateChanged(state: BladeState): void {

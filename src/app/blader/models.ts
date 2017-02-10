@@ -24,15 +24,11 @@ export interface IBladeArgs {
 }
 
 export class BladeContext {
-  private _params: Array<BladeParam>;
-
   public get hasParams(): boolean {
-    return this._params.length > 0;
+    return this.params.length > 0;
   }
 
-  public get params(): Array<BladeParam> {
-    return this._params;
-  }
+  public params: Array<BladeParam>;
 
   public isEntry: boolean = false;
 
@@ -42,9 +38,9 @@ export class BladeContext {
     params?: Array<BladeParam>
   ) {
     if (params) {
-      this._params = params;
+      this.params = params;
     } else {
-      this._params = new Array<BladeParam>();
+      this.params = new Array<BladeParam>();
     }
   }
 
