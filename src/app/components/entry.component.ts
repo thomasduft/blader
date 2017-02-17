@@ -8,6 +8,7 @@ import { IBladeComponent, BladeManager } from './../blader/index';
   <ul>
     <li (click)="clicked('list')">List</li>
     <li (click)="clicked('detail')">Detail</li>
+    <li (click)="clicked('lazy')">Lazy</li>
   </ul>`
 })
 export class EntryComponent implements IBladeComponent {
@@ -24,6 +25,8 @@ export class EntryComponent implements IBladeComponent {
       this._mgr.executeAction(key, [
         { key: 'viewDefId', value: 'ProductListViewDef' }
       ]);
+    } else if (key === 'lazy') {
+      this._mgr.executeAction(key);
     } else {
       this._mgr.executeAction(key, [
         { key: 'viewDefId', value: 'ProductViewDef' },
