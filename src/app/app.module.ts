@@ -31,7 +31,7 @@ const APP_ROUTES = RouterModule.forRoot([
     BrowserModule,
     HttpModule,
     APP_ROUTES,
-    BladerModule
+    BladerModule.forRoot()
   ],
   declarations: [
     AppComponent,
