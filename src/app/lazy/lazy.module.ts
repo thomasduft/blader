@@ -5,14 +5,14 @@ import { RouterModule } from '@angular/router';
 import { BladeRegistry, BladeMetaData } from './../blader/index';
 import { LazyBladeComponent } from './lazyBlade.component';
 
-const LAZY_ROUTERS = [
+const LAZY_ROUTES = [
   { path: '', component: LazyBladeComponent }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(LAZY_ROUTERS)
+    RouterModule.forChild(LAZY_ROUTES)
   ],
   declarations: [
     LazyBladeComponent
