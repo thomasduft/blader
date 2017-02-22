@@ -29,5 +29,7 @@ export class LazyModule {
     private _bladeRegistry: BladeRegistry
   ) {
     this._bladeRegistry.register(new BladeMetaData('lazy', LazyBladeComponent));
+
+    console.log(this._bladeRegistry);
   }
 }

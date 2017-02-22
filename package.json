@@ -17,18 +17,17 @@
     "test-once": "tsc && karma start karma.conf.js --single-run --enableCoverage",
     "clean": "gulp clean",
     "less": "gulp less",
-    "less:w": "gulp watch-less",
-    "i18n": "ng-xi18n"
+    "less:w": "gulp watch-less"
   },
   "dependencies": {
-    "@angular/common": "4.0.0-beta.7",
-    "@angular/compiler": "4.0.0-beta.7",
-    "@angular/core": "4.0.0-beta.7",
-    "@angular/forms": "4.0.0-beta.7",
-    "@angular/http": "4.0.0-beta.7",
-    "@angular/platform-browser": "4.0.0-beta.7",
-    "@angular/platform-browser-dynamic": "4.0.0-beta.7",
-    "@angular/router": "4.0.0-beta.7",
+    "@angular/common": "4.0.0-beta.8",
+    "@angular/compiler": "4.0.0-beta.8",
+    "@angular/core": "4.0.0-beta.8",
+    "@angular/forms": "4.0.0-beta.8",
+    "@angular/http": "4.0.0-beta.8",
+    "@angular/platform-browser": "4.0.0-beta.8",
+    "@angular/platform-browser-dynamic": "4.0.0-beta.8",
+    "@angular/router": "4.0.0-beta.8",
     "core-js": "^2.4.1",
     "intl": "1.2.5",
     "rxjs": "5.0.1",
@@ -36,8 +35,6 @@
     "zone.js": "^0.7.4"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "4.0.0-beta.7",
-    "@angular/platform-server": "4.0.0-beta.7",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.46",
     "concurrently": "3.1.0",
