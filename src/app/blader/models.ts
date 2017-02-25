@@ -30,7 +30,7 @@ export class BladeContext {
 
   public params: Array<BladeParam>;
 
-  public isEntry: boolean = false;
+  public isEntry = false;
 
   public constructor(
     public id: number,

@@ -9,6 +9,6 @@ import { IBladeComponent } from './../blader/index';
 })
 export class LazyBladeComponent implements IBladeComponent {
   public id: number;
-  public title: string = 'Lazy';
-  public isDirty: boolean = false;
+  public title = 'Lazy';
+  public isDirty = false;
 }

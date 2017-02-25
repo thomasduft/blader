@@ -30,8 +30,8 @@ import { IBladeComponent, BladeManager } from './../blader/index';
 })
 export class ListComponent implements IBladeComponent, OnInit {
   public id: number;
-  public title: string = 'List';
-  public isDirty: boolean = false;
+  public title = 'List';
+  public isDirty = false;
 
   public viewDefId: string;
 

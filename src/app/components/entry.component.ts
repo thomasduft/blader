@@ -13,8 +13,8 @@ import { IBladeComponent, BladeManager } from './../blader/index';
 })
 export class EntryComponent implements IBladeComponent {
   public id: number;
-  public title: string = 'Entry';
-  public isDirty: boolean = false;
+  public title = 'Entry';
+  public isDirty = false;
 
   public constructor(
     private _mgr: BladeManager

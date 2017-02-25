@@ -36,7 +36,7 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
     <h3>{{ title }}</h3>
   </div>
   <div class="blade-content">
-    <template #bladeContent></template>
+    <ng-template #bladeContent></ng-template>
   </div>`
 })
 export class BladeComponent implements OnInit, OnDestroy {

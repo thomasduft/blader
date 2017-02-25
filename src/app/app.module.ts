@@ -37,7 +37,7 @@ const APP_ROUTES = RouterModule.forRoot([
     HttpModule,
     APP_ROUTES,
     BladerModule.forRoot(),
-    // -- MODULES REGION 
+    // -- MODULES REGION
     // LazyModule
     // -- END MODULES
   ],
