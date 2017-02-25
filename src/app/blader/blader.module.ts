@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -24,10 +24,17 @@ const BLADER_ROUTES = RouterModule.forChild([
     BladeComponent
   ],
   providers: [
-    { provide: BladeRegistry, useClass: BladeRegistry },
     { provide: BladeManager, useClass: BladeManager },
     { provide: CanDeactivateBladerComponent, useClass: CanDeactivateBladerComponent }
   ]
 })
 export class BladerModule {
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: BladerModule,
+      providers: [
+        { provide: BladeRegistry, useClass: BladeRegistry }
+      ]
+    };
+  }
 }

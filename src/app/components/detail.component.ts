@@ -17,8 +17,8 @@ import { IBladeComponent, BladeManager } from './../blader/index';
 })
 export class DetailComponent implements IBladeComponent, OnInit {
   public id: number;
-  public title: string = 'Detail';
-  public isDirty: boolean = false;
+  public title = 'Detail';
+  public isDirty = false;
 
   public viewDefId: string;
   public objKey: string;

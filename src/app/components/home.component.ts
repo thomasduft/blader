@@ -12,6 +12,6 @@ import { IBladeComponent } from './../blader/index';
 })
 export class HomeComponent implements IBladeComponent {
   public id: number;
-  public title: string = 'Home blade';
-  public isDirty: boolean = false;
+  public title = 'Home blade';
+  public isDirty = false;
 }
