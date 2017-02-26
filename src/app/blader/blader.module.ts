@@ -10,14 +10,14 @@ import {
   CanDeactivateBladerComponent
 } from './index';
 
-const BLADER_ROUTES = RouterModule.forChild([
+const BLADER_ROUTES = [
   { path: 'blader/:entry', component: BladerComponent, canDeactivate: [CanDeactivateBladerComponent] }
-]);
+];
 
 @NgModule({
   imports: [
     CommonModule,
-    BLADER_ROUTES
+    RouterModule.forChild(BLADER_ROUTES)
   ],
   declarations: [
     BladerComponent,
