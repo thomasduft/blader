@@ -13,6 +13,7 @@ gulp.task('clean', function () {
     '*.ts',
     '*.map',
     '*.js',
+    '*.log',
     '!gulpfile.js',
     '!karma.conf.js',
     '!test.main.js'

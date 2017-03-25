@@ -1,0 +1,42 @@
+@import "variables.less";
+		
+.sidebar {
+  width: 268px;
+	display: flex;
+	flex-direction: column;
+}
+		
+.sidebar-collapsed {
+  width: 50px;
+}
+		
+.sidebar-content {
+	flex: 1;
+	display: flex;
+}
+		
+.main {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+}
+		
+.content {
+	flex: 1;
+	display: flex;
+}
+
+/* Responsive -> better handle width state with angular client */
+@media (max-width: 768px) {
+  .sidebar {
+		width: 50px;
+		display: flex;
+		flex-direction: column;
+  }
+  .sidebar-header,
+	.sidebar-content,
+	.sidebar-footer {
+		display: none;
+	}
+}
