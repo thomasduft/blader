@@ -1,26 +1,19 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "removeComments": true,
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": false,
-    "sourceMap": true,
-    "declaration": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "strictNullChecks": true,
-    "skipLibCheck": true,
-    "lib": [
-      "es2015",
-      "dom"
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
     ],
-    "rootDir": "src/app/"
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  }
 }

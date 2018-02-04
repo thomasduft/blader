@@ -2,13 +2,10 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import {
-  BladerComponent,
-  BladeComponent,
-  BladeRegistry,
-  BladeManager,
-  CanDeactivateBladerComponent
-} from './index';
+import { BladerComponent, CanDeactivateBladerComponent } from './blader.component';
+import { BladeComponent } from './blade.component';
+import { BladeRegistry } from './bladeRegistry.service';
+import { BladeManager } from './bladeManager.service';
 
 const BLADER_ROUTES = [
   { path: 'blader/:entry', component: BladerComponent, canDeactivate: [CanDeactivateBladerComponent] }

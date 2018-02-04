@@ -6,10 +6,10 @@ import { ActivatedRoute, CanDeactivate } from '@angular/router';
 import {
   BladeContext,
   IBladeArgs,
-  BladeState,
-  BladeManager,
-  BladeComponent
-} from './../blader/index';
+  BladeState
+} from './models';
+import { BladeManager } from './bladeManager.service';
+import { BladeComponent } from './blade.component';
 
 @Component({
   selector: 'tw-blader',

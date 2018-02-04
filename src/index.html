@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-  <base href="/">
+  <meta charset="utf-8">
   <title>Blader</title>
-  <meta charset="UTF-8">
+  <base href="/">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="/assets/styles/app.css">
@@ -14,23 +15,6 @@
   <app>
     <i>Loading</i>
   </app>
-
-  <script src="../node_modules/core-js/client/shim.min.js"></script>
-  <script src="../node_modules/zone.js/dist/zone.js"></script>
-  <script src="../node_modules/systemjs/dist/system.js"></script>
-  
-  <script src="systemjs.config.js"></script>
-  <script>
-    System.config({
-      map: {
-        text: 'systemjs.text.plugin.js'
-      }
-    });
-    System.import('app')
-      .catch(function (err) {
-        console.error(err);
-      });
-  </script>
 </body>
 
 </html>
