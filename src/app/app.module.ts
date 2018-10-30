@@ -1,4 +1,4 @@
-import { NgModule, SystemJsNgModuleLoader } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RESOURCE_CACHE_PROVIDER } from '@angular/platform-browser-dynamic';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -19,16 +19,12 @@ import {
   BladeMetaData
 } from './blader/index';
 
-// -- MODULES IMPORT REGION
-// import { LazyModule } from './lazy/index';
-// -- END MODULES IMPORT REGION
-
 const APP_ROUTES = RouterModule.forRoot([
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
   { path: 'detail', component: DetailComponent },
-  { path: 'lazy', loadChildren: './app/lazy/lazy.module#LazyModule' },
+  { path: 'lazy', loadChildren: './app/lazy/lazy.module#LazyModule' }
 ]);
 
 @NgModule({
@@ -36,10 +32,7 @@ const APP_ROUTES = RouterModule.forRoot([
     BrowserModule,
     HttpModule,
     APP_ROUTES,
-    BladerModule.forRoot(),
-    // -- MODULES REGION
-    // LazyModule
-    // -- END MODULES
+    BladerModule.forRoot()
   ],
   declarations: [
     AppComponent,
@@ -56,8 +49,7 @@ const APP_ROUTES = RouterModule.forRoot([
   bootstrap: [AppComponent],
   providers: [
     RESOURCE_CACHE_PROVIDER,
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
-    SystemJsNgModuleLoader
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ]
 })
 export class AppModule {
