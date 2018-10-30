@@ -23,8 +23,8 @@ const APP_ROUTES = RouterModule.forRoot([
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
-  { path: 'detail', component: DetailComponent },
-  { path: 'lazy', loadChildren: './app/lazy/lazy.module#LazyModule' }
+  { path: 'detail', component: DetailComponent }
+  // { path: 'lazy', loadChildren: './app/lazy/lazy.module#LazyModule' }
 ]);
 
 @NgModule({
