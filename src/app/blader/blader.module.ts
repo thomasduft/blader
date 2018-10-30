@@ -1,10 +1,9 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { BladerComponent, CanDeactivateBladerComponent } from './blader.component';
 import { BladeComponent } from './blade.component';
-import { BladeRegistry } from './bladeRegistry.service';
 import { BladeManager } from './bladeManager.service';
 
 const BLADER_ROUTES = [
@@ -29,13 +28,4 @@ const BLADER_ROUTES = [
     { provide: CanDeactivateBladerComponent, useClass: CanDeactivateBladerComponent }
   ]
 })
-export class BladerModule {
-  public static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: BladerModule,
-      providers: [
-        { provide: BladeRegistry, useClass: BladeRegistry }
-      ]
-    };
-  }
-}
+export class BladerModule { }

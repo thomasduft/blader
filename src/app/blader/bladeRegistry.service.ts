@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { BladeMetaData } from './models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class BladeRegistry {
   private _registry: Map<string, BladeMetaData> = new Map<string, BladeMetaData>();
 
