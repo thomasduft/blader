@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RESOURCE_CACHE_PROVIDER } from '@angular/platform-browser-dynamic';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { SidebarComponent, WorkspaceComponent } from './shared/index';
@@ -28,8 +28,8 @@ const APP_ROUTES = RouterModule.forRoot([
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
   { path: 'detail', component: DetailComponent },
-  { path: 'lazy', loadChildren: 'app/lazy/lazy.module#LazyModule' },
-], { preloadingStrategy: PreloadAllModules });
+  { path: 'lazy', loadChildren: './app/lazy/lazy.module#LazyModule' },
+]);
 
 @NgModule({
   imports: [

@@ -8,7 +8,11 @@ import { BladeRegistry } from './bladeRegistry.service';
 import { BladeManager } from './bladeManager.service';
 
 const BLADER_ROUTES = [
-  { path: 'blader/:entry', component: BladerComponent, canDeactivate: [CanDeactivateBladerComponent] }
+  {
+    path: 'blader/:entry',
+    component: BladerComponent,
+    canDeactivate: [CanDeactivateBladerComponent]
+  }
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ export class BladeRegistry {
   private _registry: Map<string, BladeMetaData> = new Map<string, BladeMetaData>();
 
   public register(blade: BladeMetaData): void {
-    if (this._registry.has(blade.key)) { return; };
+    if (this._registry.has(blade.key)) { return; }
 
     this._registry.set(blade.key, blade);
   }
@@ -17,7 +17,7 @@ export class BladeRegistry {
   }
 
   public get(key: string): BladeMetaData {
-    let item = this._registry.get(key);
+    const item = this._registry.get(key);
 
     if (!item) { throw new Error(`BladeMetaData for key ${key} was not found!`); }
 

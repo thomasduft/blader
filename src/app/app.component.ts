@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app',
+  selector: 'tw-app',
   template: `
   <div class="body">
     <tw-sidebar></tw-sidebar>

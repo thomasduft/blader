@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-// import { Router } from '@angular/router';
 
 import { BladeParam, BladeContext, BladeMetaData } from './models';
 import { BladeRegistry } from './bladeRegistry.service';
@@ -29,10 +28,9 @@ export class BladeManager {
 
   public add(key: string, params?: Array<BladeParam>, id?: number): number {
     // check whether key exists in registry!
-    let metaData = this.getMetaData(key);
-
-    let newId = id ? id : new Date().valueOf();
-    let ctx = new BladeContext(newId, metaData, params);
+    const metaData = this.getMetaData(key);
+    const newId = id ? id : new Date().valueOf();
+    const ctx = new BladeContext(newId, metaData, params);
 
     ctx.isEntry = this._blades.length === 0;
     if (ctx.isEntry) {
@@ -45,12 +43,10 @@ export class BladeManager {
   }
 
   public restore(): void {
-    let history = sessionStorage.getItem(BladeManager.BLADER_HISTORY_KEY);
+    const history = sessionStorage.getItem(BladeManager.BLADER_HISTORY_KEY);
     if (!history) { return; }
 
-    // this._blades = new Array<BladeContext>();
-
-    let historyCtx: Array<BladeContext> = JSON.parse(history);
+    const historyCtx: Array<BladeContext> = JSON.parse(history);
     historyCtx.forEach((b: BladeContext) => {
       if (b.isEntry) {
         this.entryId = b.id;
@@ -69,15 +65,15 @@ export class BladeManager {
         return b.id !== id;
       });
       sessionStorage.setItem(BladeManager.BLADER_HISTORY_KEY, JSON.stringify(this._blades));
-    };
+    }
   }
 
   public exists(id: number): boolean {
-    return this._blades.some((b: BladeContext) => { return b.id === id; });
+    return this._blades.some((b: BladeContext) => b.id === id);
   }
 
   public get(id: number): BladeContext {
-    let item = this._blades.find((b: BladeContext) => {
+    const item = this._blades.find((b: BladeContext) => {
       return b.id === id;
     });
 
@@ -102,11 +98,11 @@ export class BladeManager {
       return;
     }
 
-    let ctx = <BladeContext>this.get(id);
+    const ctx = <BladeContext>this.get(id);
 
     if (!ctx.hasParams) { throw new Error(`Blade ${ctx.metaData.key} does not support parameters!`); }
 
-    let param = ctx.params.find((p: BladeParam) => {
+    const param = ctx.params.find((p: BladeParam) => {
       return p.key === paramKey;
     });
 

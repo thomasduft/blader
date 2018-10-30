@@ -29,7 +29,7 @@ export class LazyModule {
     private _bladeRegistry: BladeRegistry
   ) {
     console.log(`registering LazyBladeComponent...`);
-    
+
     this._bladeRegistry.register(new BladeMetaData('lazy', LazyBladeComponent));
 
     console.log(this._bladeRegistry);

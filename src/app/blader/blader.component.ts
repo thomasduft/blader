@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 import { Component, Injectable, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute, CanDeactivate } from '@angular/router';
@@ -19,7 +19,7 @@ import { BladeComponent } from './blade.component';
   ],
   template: `
   <tw-blade *ngFor="let ctx of bladeContexts"
-            [context]="ctx" 
+            [context]="ctx"
             (stateChanged)="stateChanged($event)"
             (selected)="selectBlade($event)"
             (closed)="closed($event)">
@@ -76,7 +76,7 @@ export class BladerComponent implements OnInit, OnDestroy {
   }
 
   public getDirtyBlades(): Array<BladeComponent> {
-    let blades = this._blades.toArray();
+    const blades = this._blades.toArray();
     return blades.filter((b: BladeComponent) => {
       return b.isDirty;
     });
@@ -88,10 +88,10 @@ export class CanDeactivateBladerComponent implements CanDeactivate<BladerCompone
   public canDeactivate(component: BladerComponent): Observable<boolean> | Promise<boolean> | boolean {
 
     let canClose = true;
-    let dirtyBlades = component.getDirtyBlades();
+    const dirtyBlades = component.getDirtyBlades();
     if (dirtyBlades.length > 0) {
       canClose = false;
-      let msg = dirtyBlades.map((b: BladeComponent) => {
+      const msg = dirtyBlades.map((b: BladeComponent) => {
         return b.title;
       }).join(', ');
       alert(`Please save or undo your work on the blades:\n ${msg}`);

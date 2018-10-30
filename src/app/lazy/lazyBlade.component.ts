@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { IBladeComponent } from './../blader/index';
 
 @Component({
-  selector: 'lazy',
+  selector: 'tw-lazy',
   template: `
   <h1>Hello from lazy blade!</h1>`,
 })
