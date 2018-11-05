@@ -15,7 +15,6 @@ export class BladeManager {
 
   public entryId: number;
 
-  // TODO: observable subject ???
   public selected: BladeContext | undefined;
 
   public get blades(): Array<BladeContext> {
