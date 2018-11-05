@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IBladeComponent, BladeManager } from './../blader/index';
+import {
+  Blade,
+  BladeManager
+} from './../blader/index';
 
 @Component({
   selector: 'tw-detail',
@@ -15,7 +18,7 @@ import { IBladeComponent, BladeManager } from './../blader/index';
   </p>
   <p (click)="newTitle()">{{ title }}</p>`
 })
-export class DetailComponent implements IBladeComponent, OnInit {
+export class DetailComponent implements Blade, OnInit {
   public id: number;
   public title = 'Detail';
   public isDirty = false;

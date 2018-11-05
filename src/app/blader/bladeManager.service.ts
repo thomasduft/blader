@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { BladeParam, BladeContext, BladeMetaData } from './models';
+import {
+  BladeParam,
+  BladeContext,
+  BladeMetaData
+} from './models';
 import { BladeRegistry } from './bladeRegistry.service';
 
 @Injectable()
@@ -11,7 +15,6 @@ export class BladeManager {
 
   public entryId: number;
 
-  // TODO: observable subject ???
   public selected: BladeContext | undefined;
 
   public get blades(): Array<BladeContext> {
@@ -37,7 +40,10 @@ export class BladeManager {
       this.entryId = newId;
     }
     this._blades.push(ctx);
-    sessionStorage.setItem(BladeManager.BLADER_HISTORY_KEY, JSON.stringify(this._blades));
+    sessionStorage.setItem(
+      BladeManager.BLADER_HISTORY_KEY,
+      JSON.stringify(this._blades)
+    );
 
     return newId;
   }
@@ -51,7 +57,9 @@ export class BladeManager {
       if (b.isEntry) {
         this.entryId = b.id;
       }
-      this.add(b.metaData.key, b.params, b.id);
+      if (!b.metaData.isLazy) {
+        this.add(b.metaData.key, b.params, b.id);
+      }
     });
   }
 

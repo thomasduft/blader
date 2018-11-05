@@ -1,13 +1,12 @@
 import { Type } from '@angular/core';
 
-export interface IBladeComponent {
+export interface Blade {
   id: number;
   title: string;
   isDirty: boolean;
 }
 
 export enum BladeState {
-  minimized = 0,
   simple = 1,
   normal = 2,
   maximized = 3,
@@ -18,7 +17,7 @@ export class BladeParam {
   public value: any;
 }
 
-export interface IBladeArgs {
+export interface BladeArgs {
   id: number;
   metaData: BladeMetaData;
 }
@@ -44,11 +43,19 @@ export class BladeContext {
     }
   }
 
-  public toBladeArgs(): IBladeArgs {
+  public toBladeArgs(): BladeArgs {
     return { id: this.id, metaData: this.metaData };
   }
 }
 
 export class BladeMetaData {
-  public constructor(public key: string, public component: Type<any>) { }
+  public isLazy = false;
+
+  public constructor(
+    public key: string,
+    public component: Type<any>,
+    public factoryFn?: Function
+  ) {
+    this.isLazy = this.factoryFn !== undefined;
+  }
 }

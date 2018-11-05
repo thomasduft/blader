@@ -1,11 +1,19 @@
-import { Observable } from 'rxjs';
-
-import { Component, Injectable, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
-import { ActivatedRoute, CanDeactivate } from '@angular/router';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  ViewChildren,
+  QueryList
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  CanDeactivate
+} from '@angular/router';
 
 import {
   BladeContext,
-  IBladeArgs,
+  BladeArgs,
   BladeState
 } from './models';
 import { BladeManager } from './bladeManager.service';
@@ -18,11 +26,12 @@ import { BladeComponent } from './blade.component';
     BladeManager
   ],
   template: `
-  <tw-blade *ngFor="let ctx of bladeContexts"
-            [context]="ctx"
-            (stateChanged)="stateChanged($event)"
-            (selected)="selectBlade($event)"
-            (closed)="closed($event)">
+  <tw-blade
+    *ngFor="let ctx of bladeContexts"
+    [context]="ctx"
+    (stateChanged)="stateChanged($event)"
+    (selected)="selectBlade($event)"
+    (closed)="closed($event)">
   </tw-blade>`
 })
 export class BladerComponent implements OnInit, OnDestroy {
@@ -41,14 +50,16 @@ export class BladerComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this._route.params.subscribe((params: { entry: string }) => {
-      if (this._mgr.mustRestore) {
-        this._mgr.restore();
-      } else {
-        this._mgr.add(params.entry);
-      }
-      this._entryComponentId = this._mgr.entryId;
-    });
+    // TODO: unsubscribe
+    this._route.params
+      .subscribe((params: { entry: string }) => {
+        if (this._mgr.mustRestore) {
+          this._mgr.restore();
+        } else {
+          this._mgr.add(params.entry);
+        }
+        this._entryComponentId = this._mgr.entryId;
+      });
   }
 
   public ngOnDestroy(): void {
@@ -61,15 +72,20 @@ export class BladerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public selectBlade(args: IBladeArgs): void {
-    if (this._mgr.selected && args.id === this._mgr.selected.id) { return; }
+  public selectBlade(args: BladeArgs): void {
+    if (this._mgr.selected
+      && args.id === this._mgr.selected.id) {
+      return;
+    }
 
     this._mgr.select(args.id);
     console.log(`selected blade: ${args.id}`);
   }
 
-  public closed(args: IBladeArgs): void {
-    if (this._entryComponentId === args.id) { return; }
+  public closed(args: BladeArgs): void {
+    if (this._entryComponentId === args.id) {
+      return;
+    }
 
     console.log(`closing blade: ${args.id}`);
     this._mgr.remove(args.id);
@@ -85,8 +101,7 @@ export class BladerComponent implements OnInit, OnDestroy {
 
 @Injectable()
 export class CanDeactivateBladerComponent implements CanDeactivate<BladerComponent> {
-  public canDeactivate(component: BladerComponent): Observable<boolean> | Promise<boolean> | boolean {
-
+  public canDeactivate(component: BladerComponent): boolean {
     let canClose = true;
     const dirtyBlades = component.getDirtyBlades();
     if (dirtyBlades.length > 0) {
@@ -100,4 +115,3 @@ export class CanDeactivateBladerComponent implements CanDeactivate<BladerCompone
     return canClose;
   }
 }
-
