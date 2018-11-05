@@ -7,7 +7,8 @@ import {
   EventEmitter,
   ComponentRef,
   ViewContainerRef,
-  ViewChild
+  ViewChild,
+  ComponentFactoryResolver
 } from '@angular/core';
 
 import { BladeContext, IBladeArgs, BladeState } from './models';
@@ -17,18 +18,10 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
   host: { 'class': 'blade' },
   template: `
   <div class="blade-header" (click)="clicked()">
-    <span (click)="changeState(1)">
-      simple
-    </span>
-    <span (click)="changeState(2)">
-      normal
-    </span>
-    <span (click)="changeState(3)">
-      maximize
-    </span>
-    <span *ngIf="!closeIsHidden" (click)="close()">
-      close
-    </span>
+    <span (click)="changeState(1)">simple</span>|
+    <span (click)="changeState(2)">normal</span>|
+    <span (click)="changeState(3)">maximize</span>|
+    <span *ngIf="canClose" (click)="close()">close</span>
     <h3>{{ title }}</h3>
   </div>
   <div class="blade-content">
@@ -58,12 +51,12 @@ export class BladeComponent implements OnInit, OnDestroy {
     return this._componentRef.instance.isDirty;
   }
 
-  public get closeIsHidden(): boolean {
+  public get canClose(): boolean {
     if (this.context.isEntry) {
-      return true;
+      return false;
     }
 
-    return this.isDirty;
+    return !this.isDirty;
   }
 
   @ViewChild('bladeContent', { read: ViewContainerRef })
@@ -71,7 +64,11 @@ export class BladeComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     if (this.context) {
-      const factory = this.context.metaData.factoryFn();
+      const factory = this.context.metaData.factoryFn
+        ? this.context.metaData.factoryFn()
+        : this.bladeContent.injector
+          .get(ComponentFactoryResolver)
+          .resolveComponentFactory(this.context.metaData.component);
 
       this._componentRef = this.bladeContent
         .createComponent(factory, this.bladeContent.length);

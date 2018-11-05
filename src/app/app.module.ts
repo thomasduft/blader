@@ -48,22 +48,10 @@ const APP_ROUTES = RouterModule.forRoot([
 })
 export class AppModule {
   public constructor(
-    private _bladeRegistry: BladeRegistry,
-    private _injector: Injector
+    private _bladeRegistry: BladeRegistry
   ) {
-    this._bladeRegistry.register(new BladeMetaData('entry', EntryComponent, () => {
-      const resolver = this._injector.get(ComponentFactoryResolver);
-      return resolver.resolveComponentFactory(EntryComponent);
-    }));
-
-    this._bladeRegistry.register(new BladeMetaData('list', ListComponent, () => {
-      const resolver = this._injector.get(ComponentFactoryResolver);
-      return resolver.resolveComponentFactory(ListComponent);
-    }));
-
-    this._bladeRegistry.register(new BladeMetaData('detail', DetailComponent, () => {
-      const resolver = this._injector.get(ComponentFactoryResolver);
-      return resolver.resolveComponentFactory(DetailComponent);
-    }));
+    this._bladeRegistry.register(new BladeMetaData('entry', EntryComponent));
+    this._bladeRegistry.register(new BladeMetaData('list', ListComponent));
+    this._bladeRegistry.register(new BladeMetaData('detail', DetailComponent));
   }
 }

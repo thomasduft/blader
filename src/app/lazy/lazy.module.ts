@@ -32,8 +32,9 @@ export class LazyModule {
     console.log(`registering LazyBladeComponent...`);
 
     this._bladeRegistry.register(new BladeMetaData('lazy', LazyBladeComponent, () => {
-      const resolver = this._injector.get(ComponentFactoryResolver);
-      return resolver.resolveComponentFactory(LazyBladeComponent);
+      return this._injector
+        .get(ComponentFactoryResolver)
+        .resolveComponentFactory(LazyBladeComponent);
     }));
 
     console.log(this._bladeRegistry);
