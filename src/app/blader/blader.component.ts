@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-
 import {
   Component,
   Injectable,
@@ -15,7 +13,7 @@ import {
 
 import {
   BladeContext,
-  IBladeArgs,
+  BladeArgs,
   BladeState
 } from './models';
 import { BladeManager } from './bladeManager.service';
@@ -74,7 +72,7 @@ export class BladerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public selectBlade(args: IBladeArgs): void {
+  public selectBlade(args: BladeArgs): void {
     if (this._mgr.selected
       && args.id === this._mgr.selected.id) {
       return;
@@ -84,7 +82,7 @@ export class BladerComponent implements OnInit, OnDestroy {
     console.log(`selected blade: ${args.id}`);
   }
 
-  public closed(args: IBladeArgs): void {
+  public closed(args: BladeArgs): void {
     if (this._entryComponentId === args.id) {
       return;
     }

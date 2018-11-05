@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 
-import { IBladeComponent, BladeManager } from './../blader/index';
+import {
+  Blade,
+  BladeManager
+} from './../blader/index';
 
 @Component({
   selector: 'tw-lazy',
@@ -9,7 +12,7 @@ import { IBladeComponent, BladeManager } from './../blader/index';
   <button type="button" (click)="clicked('detail')">Detail</button>
   `
 })
-export class LazyBladeComponent implements IBladeComponent {
+export class LazyBladeComponent implements Blade {
   public id: number;
   public title = 'Lazy';
   public isDirty = false;

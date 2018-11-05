@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { BladeParam, BladeContext, BladeMetaData } from './models';
+import {
+  BladeParam,
+  BladeContext,
+  BladeMetaData
+} from './models';
 import { BladeRegistry } from './bladeRegistry.service';
 
 @Injectable()

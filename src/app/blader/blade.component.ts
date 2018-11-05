@@ -11,7 +11,11 @@ import {
   ComponentFactoryResolver
 } from '@angular/core';
 
-import { BladeContext, IBladeArgs, BladeState } from './models';
+import {
+  BladeContext,
+  BladeArgs,
+  BladeState
+} from './models';
 
 @Component({
   selector: 'tw-blade',
@@ -38,10 +42,10 @@ export class BladeComponent implements OnInit, OnDestroy {
   public stateChanged: EventEmitter<BladeState> = new EventEmitter<BladeState>();
 
   @Output()
-  public selected: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
+  public selected: EventEmitter<BladeArgs> = new EventEmitter<BladeArgs>();
 
   @Output()
-  public closed: EventEmitter<IBladeArgs> = new EventEmitter<IBladeArgs>();
+  public closed: EventEmitter<BladeArgs> = new EventEmitter<BladeArgs>();
 
   public get title(): string {
     return this._componentRef.instance.title;

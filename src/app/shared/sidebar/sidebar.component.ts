@@ -9,13 +9,21 @@ import { Component } from '@angular/core';
    </div>
    <div class="sidebar-content">
      <ul class="sidebar-nav">
-       <li routerLinkActive="active"><a routerLink="/home">Home</a></li>
-       <li routerLinkActive="active"><a routerLink="/list">List</a></li>
-       <li routerLinkActive="active"><a routerLink="/detail">Detail</a></li>
-       <li routerLinkActive="active"><a routerLink="/blader/entry">Blader</a></li>
+      <li routerLinkActive="active">
+        <a routerLink="/home">Home</a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/list">List</a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/detail">Detail</a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/blader/entry">Blader</a>
+      </li>
      </ul>
    </div>
-   <div class="sidebar-footer">Sidebar Footer</div>`
+   <div class="sidebar-footer"></div>`
 })
 export class SidebarComponent {
 }

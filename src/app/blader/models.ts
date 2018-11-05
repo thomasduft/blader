@@ -1,6 +1,6 @@
 import { Type } from '@angular/core';
 
-export interface IBladeComponent {
+export interface Blade {
   id: number;
   title: string;
   isDirty: boolean;
@@ -17,7 +17,7 @@ export class BladeParam {
   public value: any;
 }
 
-export interface IBladeArgs {
+export interface BladeArgs {
   id: number;
   metaData: BladeMetaData;
 }
@@ -43,7 +43,7 @@ export class BladeContext {
     }
   }
 
-  public toBladeArgs(): IBladeArgs {
+  public toBladeArgs(): BladeArgs {
     return { id: this.id, metaData: this.metaData };
   }
 }
