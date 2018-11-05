@@ -21,7 +21,9 @@ export class BladeRegistry {
   public get(key: string): BladeMetaData {
     const item = this._registry.get(key);
 
-    if (!item) { throw new Error(`BladeMetaData for key ${key} was not found!`); }
+    if (!item) {
+      throw new Error(`BladeMetaData for key ${key} was not found!`);
+    }
 
     return item;
   }
