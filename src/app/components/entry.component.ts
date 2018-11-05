@@ -22,13 +22,13 @@ export class EntryComponent implements IBladeComponent {
 
   public clicked(key: string): void {
     if (key === 'list') {
-      this._mgr.executeAction(key, [
+      this._mgr.add(key, [
         { key: 'viewDefId', value: 'ProductListViewDef' }
       ]);
     } else if (key === 'lazy') {
-      this._mgr.executeAction(key);
+      this._mgr.add(key);
     } else {
-      this._mgr.executeAction(key, [
+      this._mgr.add(key, [
         { key: 'viewDefId', value: 'ProductViewDef' },
         { key: 'objKey', value: 'Product(1)' }
       ]);

@@ -44,7 +44,7 @@ export class ListComponent implements IBladeComponent, OnInit {
   }
 
   public clicked(key: string): void {
-    this._mgr.executeAction(key, [
+    this._mgr.add(key, [
       { key: 'viewDefId', value: 'ProductViewDef' },
       { key: 'objKey', value: 'Product(1)' }
     ]);

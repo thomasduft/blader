@@ -86,12 +86,6 @@ export class BladeManager {
     this.selected = this.get(id);
   }
 
-  public executeAction(key: string, params?: Array<BladeParam>): void {
-    if (this._registry.exists(key)) {
-      this.add(key, params);
-    }
-  }
-
   public getParamValue<T>(id: number, paramKey: string): any {
     if (!this.exists(id)) {
       console.log(`Param ${paramKey} for blade ${id} does not exist!`);
