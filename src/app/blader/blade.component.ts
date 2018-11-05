@@ -7,7 +7,6 @@ import {
   EventEmitter,
   ComponentRef,
   ViewContainerRef,
-  ComponentFactoryResolver,
   ViewChild
 } from '@angular/core';
 
@@ -17,20 +16,17 @@ import { BladeContext, IBladeArgs, BladeState } from './models';
   selector: 'tw-blade',
   host: { 'class': 'blade' },
   template: `
-  <div class="blade-header" (click)="clicked($event)">
-    <span (click)="changeState($event, 0)">
-      minimize
-    </span>
-    <span (click)="changeState($event, 1)">
+  <div class="blade-header" (click)="clicked()">
+    <span (click)="changeState(1)">
       simple
     </span>
-    <span (click)="changeState($event, 2)">
+    <span (click)="changeState(2)">
       normal
     </span>
-    <span (click)="changeState($event, 3)">
+    <span (click)="changeState(3)">
       maximize
     </span>
-    <span *ngIf="!closeIsHidden" (click)="close($event)">
+    <span *ngIf="!closeIsHidden" (click)="close()">
       close
     </span>
     <h3>{{ title }}</h3>
@@ -75,10 +71,10 @@ export class BladeComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     if (this.context) {
-      const injector = this.bladeContent.injector;
-      const factory = injector.get(ComponentFactoryResolver).resolveComponentFactory(this.context.metaData.component);
+      const factory = this.context.metaData.factoryFn();
 
-      this._componentRef = this.bladeContent.createComponent(factory, this.bladeContent.length);
+      this._componentRef = this.bladeContent
+        .createComponent(factory, this.bladeContent.length);
       this._componentRef.instance.id = this.context.id;
 
       console.log(`initialized ${this.title} blade:`, this.context.id);
@@ -93,21 +89,15 @@ export class BladeComponent implements OnInit, OnDestroy {
     }
   }
 
-  public clicked(event: Event): void {
-    event.preventDefault();
-
+  public clicked(): void {
     this.selected.next(this.context.toBladeArgs());
   }
 
-  public changeState(event: Event, state: BladeState): void {
-    event.preventDefault();
-
+  public changeState(state: BladeState): void {
     this.stateChanged.next(state);
   }
 
-  public close(event: Event): void {
-    event.preventDefault();
-
+  public close(): void {
     this.closed.next(this.context.toBladeArgs());
   }
 }

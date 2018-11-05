@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injector, ComponentFactoryResolver } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { RouterModule, PreloadAllModules } from '@angular/router';
@@ -48,10 +48,22 @@ const APP_ROUTES = RouterModule.forRoot([
 })
 export class AppModule {
   public constructor(
-    private _bladeRegistry: BladeRegistry
+    private _bladeRegistry: BladeRegistry,
+    private _injector: Injector
   ) {
-    this._bladeRegistry.register(new BladeMetaData('entry', EntryComponent));
-    this._bladeRegistry.register(new BladeMetaData('list', ListComponent));
-    this._bladeRegistry.register(new BladeMetaData('detail', DetailComponent));
+    this._bladeRegistry.register(new BladeMetaData('entry', EntryComponent, () => {
+      const resolver = this._injector.get(ComponentFactoryResolver);
+      return resolver.resolveComponentFactory(EntryComponent);
+    }));
+
+    this._bladeRegistry.register(new BladeMetaData('list', ListComponent, () => {
+      const resolver = this._injector.get(ComponentFactoryResolver);
+      return resolver.resolveComponentFactory(ListComponent);
+    }));
+
+    this._bladeRegistry.register(new BladeMetaData('detail', DetailComponent, () => {
+      const resolver = this._injector.get(ComponentFactoryResolver);
+      return resolver.resolveComponentFactory(DetailComponent);
+    }));
   }
 }

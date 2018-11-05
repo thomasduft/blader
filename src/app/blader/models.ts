@@ -7,7 +7,6 @@ export interface IBladeComponent {
 }
 
 export enum BladeState {
-  minimized = 0,
   simple = 1,
   normal = 2,
   maximized = 3,
@@ -50,5 +49,9 @@ export class BladeContext {
 }
 
 export class BladeMetaData {
-  public constructor(public key: string, public component: Type<any>) { }
+  public constructor(
+    public key: string,
+    public component: Type<any>,
+    public factoryFn: Function
+  ) { }
 }
