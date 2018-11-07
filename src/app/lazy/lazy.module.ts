@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, Injector, ComponentFactoryResolver } from '@angular/core';
+import { NgModule, ComponentFactoryResolver } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { BladeRegistry, BladeMetaData } from './../blader/index';
@@ -27,7 +27,7 @@ const LAZY_ROUTES = [
 export class LazyModule {
   public constructor(
     private _bladeRegistry: BladeRegistry,
-    private _injector: Injector
+    private _resolver: ComponentFactoryResolver
   ) {
     console.log(`registering LazyBladeComponent...`);
 
@@ -36,9 +36,7 @@ export class LazyModule {
         'lazy',
         LazyBladeComponent,
         () => {
-          return this._injector
-            .get(ComponentFactoryResolver)
-            .resolveComponentFactory(LazyBladeComponent);
+          return this._resolver.resolveComponentFactory(LazyBladeComponent);
         }));
 
     console.log(this._bladeRegistry);
