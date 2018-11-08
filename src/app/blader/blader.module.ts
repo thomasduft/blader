@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+import { IconModule } from './../shared/icon/icon.module';
+
 import {
   BladerComponent,
   CanDeactivateBladerComponent
@@ -20,7 +22,8 @@ const BLADER_ROUTES = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(BLADER_ROUTES)
+    RouterModule.forChild(BLADER_ROUTES),
+    IconModule
   ],
   declarations: [
     BladerComponent,

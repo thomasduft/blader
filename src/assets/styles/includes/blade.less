@@ -9,12 +9,20 @@
   width: 200px;
   overflow: auto;
   padding: 5px;
-  .blade-header {
-    height: 80px;
+  .blade__header {
+    height: 40px;
     background: lightblue;
+    .blade__commands {
+      display: block;
+      float: right;
+    }
   }
-  .blade-content {
+  .blade__content {
     background: lightgray;
     align-items: stretch;
   }
+}
+
+.blade--wide {
+  width: 500px;
 }

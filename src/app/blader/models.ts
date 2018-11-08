@@ -7,9 +7,8 @@ export interface Blade {
 }
 
 export enum BladeState {
-  simple = 1,
-  normal = 2,
-  maximized = 3,
+  default = 1,
+  wide = 2
 }
 
 export class BladeParam {

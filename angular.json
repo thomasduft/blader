@@ -20,7 +20,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/styles/app.less"
+              "src/assets/styles/app.less",
+              {
+                "input": "./node_modules/font-awesome/css/font-awesome.css"
+              }
             ],
             "scripts": []
           },

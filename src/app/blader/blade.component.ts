@@ -8,7 +8,8 @@ import {
   ComponentRef,
   ViewContainerRef,
   ViewChild,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
+  HostBinding
 } from '@angular/core';
 
 import {
@@ -19,21 +20,28 @@ import {
 
 @Component({
   selector: 'tw-blade',
-  host: { 'class': 'blade' },
   template: `
-  <div class="blade-header" (click)="clicked()">
-    <span (click)="changeState(1)">simple</span>|
-    <span (click)="changeState(2)">normal</span>|
-    <span (click)="changeState(3)">maximize</span>|
-    <span *ngIf="canClose" (click)="close()">close</span>
+  <div class="blade__header" (click)="clicked()">
+    <div class="blade__commands">
+      <span *ngIf="canMinimize" (click)="changeState(1)">
+        <tw-icon name="window-minimize"></tw-icon>
+      </span>
+      <span *ngIf="canMaximize" (click)="changeState(2)">
+        <tw-icon name="window-restore"></tw-icon>
+      </span>
+      <span *ngIf="canClose" (click)="close()">
+        <tw-icon name="window-close"></tw-icon>
+      </span>
+    </div>
     <h3>{{ title }}</h3>
   </div>
-  <div class="blade-content">
+  <div class="blade__content">
     <ng-template #bladeContent></ng-template>
   </div>`
 })
 export class BladeComponent implements OnInit, OnDestroy {
   private _componentRef: ComponentRef<any>;
+  private _bladeState: BladeState = BladeState.default;
 
   @Input()
   public context: BladeContext;
@@ -55,6 +63,14 @@ export class BladeComponent implements OnInit, OnDestroy {
     return this._componentRef.instance.isDirty;
   }
 
+  public get canMinimize(): boolean {
+    return this._bladeState === BladeState.wide;
+  }
+
+  public get canMaximize(): boolean {
+    return this._bladeState === BladeState.default;
+  }
+
   public get canClose(): boolean {
     if (this.context.isEntry) {
       return false;
@@ -62,6 +78,9 @@ export class BladeComponent implements OnInit, OnDestroy {
 
     return !this.isDirty;
   }
+
+  @HostBinding('class')
+  public classlist = this.getClassList();
 
   @ViewChild('bladeContent', { read: ViewContainerRef })
   protected bladeContent: ViewContainerRef;
@@ -95,10 +114,22 @@ export class BladeComponent implements OnInit, OnDestroy {
   }
 
   public changeState(state: BladeState): void {
-    this.stateChanged.next(state);
+    this._bladeState = state;
+
+    this.classlist = this.getClassList();
+
+    this.stateChanged.next(this._bladeState);
   }
 
   public close(): void {
     this.closed.next(this.context.toBladeArgs());
+  }
+
+  private getClassList(): string {
+    if (this._bladeState === BladeState.wide) {
+      return 'blade blade--wide';
+    }
+
+    return 'blade';
   }
 }
