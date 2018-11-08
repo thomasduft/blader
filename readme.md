@@ -1,6 +1,8 @@
 # blader
 Playground for azure portal like blade controls made with angular.
 
+![Blader](/blader.gif)
+
 ### Lazy blades
 If you want to use a blade in a lazy loaded module you need to configure the app.module with an appropriate `PreloadingStrategy`.
 
