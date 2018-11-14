@@ -9,14 +9,17 @@ import {
   ViewContainerRef,
   ViewChild,
   ComponentFactoryResolver,
-  HostBinding
+  HostBinding,
+  HostListener
 } from '@angular/core';
 
 import {
   BladeContext,
   BladeArgs,
-  BladeState
+  BladeState,
+  BladeParamConstants
 } from './models';
+import { BladeManager } from './bladeManager.service';
 
 @Component({
   selector: 'tw-blade',
@@ -85,6 +88,10 @@ export class BladeComponent implements OnInit, OnDestroy {
   @ViewChild('bladeContent', { read: ViewContainerRef })
   protected bladeContent: ViewContainerRef;
 
+  public constructor(
+    private _mgr: BladeManager
+  ) { }
+
   public ngOnInit(): void {
     if (this.context) {
       const factory = this.context.metaData.factoryFn
@@ -97,6 +104,8 @@ export class BladeComponent implements OnInit, OnDestroy {
         .createComponent(factory, this.bladeContent.length);
       this._componentRef.instance.id = this.context.id;
 
+      this.setBladeStateIfAvailable();
+
       console.log(`initialized ${this.title} blade:`, this.context.id);
     }
   }
@@ -106,6 +115,16 @@ export class BladeComponent implements OnInit, OnDestroy {
       console.log(`destroying ${this.title}`);
 
       this._componentRef.destroy();
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  public shortCuts(event: KeyboardEvent): void {
+    if (event.ctrlKey && event.key === 'q') {
+      if (this._mgr.selected.id === this.context.id
+        && this.canClose) {
+        this.close();
+      }
     }
   }
 
@@ -131,5 +150,16 @@ export class BladeComponent implements OnInit, OnDestroy {
     }
 
     return 'blade';
+  }
+
+  private setBladeStateIfAvailable(): void {
+    if (this._mgr.paramValueExist(this.context.id, BladeParamConstants.BLADE_STATE)) {
+      this._bladeState = this._mgr.getParamValue<BladeState>(
+        this.context.id,
+        BladeParamConstants.BLADE_STATE
+      );
+
+      this.changeState(this._bladeState);
+    }
   }
 }

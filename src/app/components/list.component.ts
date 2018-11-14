@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {
   Blade,
+  BladeState,
   BladeManager
 } from './../blader/index';
 
@@ -47,9 +48,13 @@ export class ListComponent implements Blade, OnInit {
   }
 
   public clicked(key: string): void {
-    this._mgr.add(key, [
-      { key: 'viewDefId', value: 'ProductViewDef' },
-      { key: 'objKey', value: 'Product(1)' }
-    ]);
+    this._mgr.addWithParams({
+      key: key,
+      params: [
+        { key: 'viewDefId', value: 'ProductViewDef' },
+        { key: 'objKey', value: 'Product(1)' }
+      ],
+      state: BladeState.wide
+    });
   }
 }

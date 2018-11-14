@@ -11,6 +11,13 @@ export enum BladeState {
   wide = 2
 }
 
+export interface BladeCreationParams {
+  key: string;
+  params?: Array<BladeParam>;
+  state?: BladeState;
+  id?: number;
+}
+
 export class BladeParam {
   public key: string;
   public value: any;
@@ -57,4 +64,9 @@ export class BladeMetaData {
   ) {
     this.isLazy = this.factoryFn !== undefined;
   }
+}
+
+export class BladeParamConstants {
+  public static readonly BLADE_KEY = 'bladeKey';
+  public static readonly BLADE_STATE = 'bladeState';
 }

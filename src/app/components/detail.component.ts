@@ -10,13 +10,13 @@ import {
   template: `
   <p>Context ID: {{ id }}</p>
   <h4>Arguments</h4>
+  <p>ViewDefId: {{ viewDefId }}</p>
+  <p>ObjKey: {{ objKey }}</p>
+  <p (click)="newTitle()">{{ title }} <-- click to change</p>
   <p>
-    ViewDefId: {{ viewDefId }}
+    <button type="button" *ngIf="isDirty" (click)="cancel()">Cancel changes</button>
   </p>
-  <p>
-    ObjKey: {{ objKey }}
-  </p>
-  <p (click)="newTitle()">{{ title }}</p>`
+  `
 })
 export class DetailComponent implements Blade, OnInit {
   public id: number;
@@ -38,5 +38,9 @@ export class DetailComponent implements Blade, OnInit {
   public newTitle(): void {
     this.title = new Date().toDateString();
     this.isDirty = true;
+  }
+
+  public cancel(): void {
+    this.isDirty = false;
   }
 }

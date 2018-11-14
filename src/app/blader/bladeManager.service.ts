@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import {
   BladeParam,
   BladeContext,
-  BladeMetaData
+  BladeMetaData,
+  BladeCreationParams,
+  BladeState,
+  BladeParamConstants
 } from './models';
 import { BladeRegistry } from './bladeRegistry.service';
 
@@ -31,21 +34,11 @@ export class BladeManager {
 
   public add(key: string, params?: Array<BladeParam>, id?: number): number {
     // check whether key exists in registry!
-    const metaData = this.getMetaData(key);
-    const newId = id ? id : new Date().valueOf();
-    const ctx = new BladeContext(newId, metaData, params);
+    return this.addInternal(key, id, params);
+  }
 
-    ctx.isEntry = this._blades.length === 0;
-    if (ctx.isEntry) {
-      this.entryId = newId;
-    }
-    this._blades.push(ctx);
-    sessionStorage.setItem(
-      BladeManager.BLADER_HISTORY_KEY,
-      JSON.stringify(this._blades)
-    );
-
-    return newId;
+  public addWithParams(params: BladeCreationParams) {
+    return this.addInternal(params.key, params.id, params.params, params.state);
   }
 
   public restore(): void {
@@ -69,6 +62,8 @@ export class BladeManager {
 
   public remove(id: number): void {
     if (this.exists(id)) {
+      this.selectPrevious();
+
       this._blades = this._blades.filter((b: BladeContext) => {
         return b.id !== id;
       });
@@ -94,6 +89,20 @@ export class BladeManager {
     this.selected = this.get(id);
   }
 
+  public selectPrevious(): void {
+    const previousId = this.getPrevious(this.selected.id);
+    if (previousId) {
+      this.select(previousId);
+    }
+  }
+
+  public paramValueExist(id: number, paramKey: string): boolean {
+    const params = this.getBladeParamsIfBladeExists(id);
+    return params.some((p: BladeParam) => {
+      return p.key === paramKey;
+    });
+  }
+
   public getParamValue<T>(id: number, paramKey: string): any {
     if (!this.exists(id)) {
       console.log(`Param ${paramKey} for blade ${id} does not exist!`);
@@ -115,11 +124,70 @@ export class BladeManager {
     throw new Error(`Param ${paramKey} for ${id} does not exist!`);
   }
 
+  private addInternal(key: string, id: number, params: BladeParam[], state?: BladeState) {
+    const metaData = this.getMetaData(key);
+    const newId = id ? id : new Date().valueOf();
+
+    // Ensure that state is set if available.
+    if (state) {
+      params.push({ key: BladeParamConstants.BLADE_STATE, value: state });
+    }
+
+    const ctx = new BladeContext(newId, metaData, params);
+    ctx.isEntry = this._blades.length === 0;
+    if (ctx.isEntry) {
+      this.entryId = newId;
+    }
+    this._blades.push(ctx);
+
+    sessionStorage.setItem(BladeManager.BLADER_HISTORY_KEY, JSON.stringify(this._blades));
+
+    this.select(ctx.id);
+
+    return newId;
+  }
+
+  private getBladeParamsIfBladeExists(id: number): Array<BladeParam> {
+    if (!this.exists(id)) {
+      return new Array<BladeParam>();
+    }
+
+    const ctx = <BladeContext>this.get(id);
+    if (!ctx.hasParams) {
+      return new Array<BladeParam>();
+    }
+
+    return ctx.params;
+  }
+
   private getMetaData(key: string): BladeMetaData {
     if (!this._registry.exists(key)) {
       throw new Error(`BladeMetaData for key ${key} not found!`);
     }
 
     return this._registry.get(key);
+  }
+
+  private getNext(id: number): number {
+    let index: number = this.blades.findIndex(b => b.id === id);
+    if (index < this.blades.length - 1) {
+      index += 1;
+    }
+
+    return this.blades[index].id;
+  }
+
+  private getPrevious(id: number): number {
+    let index: number = this.blades.findIndex(b => b.id === id);
+
+    while (index > 0) {
+      index -= 1;
+
+      if (this.blades[index]) {
+        break;
+      }
+    }
+
+    return this.blades[index].id;
   }
 }

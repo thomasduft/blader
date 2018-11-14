@@ -1,3 +1,6 @@
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import {
   Component,
   Injectable,
@@ -36,6 +39,7 @@ import { BladeComponent } from './blade.component';
 })
 export class BladerComponent implements OnInit, OnDestroy {
   private _entryComponentId: number;
+  private _unsubscribe: Subject<any> = new Subject<any>();
 
   @ViewChildren(BladeComponent)
   private _blades: QueryList<BladeComponent>;
@@ -50,8 +54,8 @@ export class BladerComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    // TODO: unsubscribe
     this._route.params
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe((params: { entry: string }) => {
         if (this._mgr.mustRestore) {
           this._mgr.restore();
@@ -64,6 +68,9 @@ export class BladerComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this._mgr.reset();
+
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 
   public stateChanged(state: BladeState): void {
