@@ -9,7 +9,6 @@ import {
   ViewContainerRef,
   ViewChild,
   ComponentFactoryResolver,
-  HostBinding,
   HostListener
 } from '@angular/core';
 
@@ -23,8 +22,13 @@ import { BladeManager } from './bladeManager.service';
 
 @Component({
   selector: 'tw-blade',
+  host: {
+    class: 'blade',
+    '[class.blade--selected]': 'isSelected',
+    '[class.blade--wide]': 'bladeState === 2'
+  },
   template: `
-  <div class="blade__header" (click)="clicked()">
+  <div class="blade__header" (click)="select()">
     <div class="blade__commands">
       <span *ngIf="canMinimize" (click)="changeState(1)">
         <tw-icon name="window-minimize"></tw-icon>
@@ -74,6 +78,22 @@ export class BladeComponent implements OnInit, OnDestroy {
     return this._bladeState === BladeState.default;
   }
 
+  public get bladeState(): BladeState {
+    return this._bladeState;
+  }
+
+  public get isSelected(): boolean {
+    if (!this._mgr.selected) {
+      return false;
+    }
+
+    if (!this.context) {
+      return false;
+    }
+
+    return this._mgr.selected.id === this.context.id;
+  }
+
   public get canClose(): boolean {
     if (this.context.isEntry) {
       return false;
@@ -81,9 +101,6 @@ export class BladeComponent implements OnInit, OnDestroy {
 
     return !this.isDirty;
   }
-
-  @HostBinding('class')
-  public classlist = this.getClassList();
 
   @ViewChild('bladeContent', { read: ViewContainerRef })
   protected bladeContent: ViewContainerRef;
@@ -121,35 +138,24 @@ export class BladeComponent implements OnInit, OnDestroy {
   @HostListener('window:keydown', ['$event'])
   public shortCuts(event: KeyboardEvent): void {
     if (event.ctrlKey && event.key === 'q') {
-      if (this._mgr.selected.id === this.context.id
-        && this.canClose) {
+      if (this.isSelected && this.canClose) {
         this.close();
       }
     }
   }
 
-  public clicked(): void {
+  public select(): void {
     this.selected.next(this.context.toBladeArgs());
   }
 
   public changeState(state: BladeState): void {
     this._bladeState = state;
 
-    this.classlist = this.getClassList();
-
     this.stateChanged.next(this._bladeState);
   }
 
   public close(): void {
     this.closed.next(this.context.toBladeArgs());
-  }
-
-  private getClassList(): string {
-    if (this._bladeState === BladeState.wide) {
-      return 'blade blade--wide';
-    }
-
-    return 'blade';
   }
 
   private setBladeStateIfAvailable(): void {
