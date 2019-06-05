@@ -102,7 +102,7 @@ export class BladeComponent implements OnInit, OnDestroy {
     return !this.isDirty;
   }
 
-  @ViewChild('bladeContent', { read: ViewContainerRef })
+  @ViewChild('bladeContent', { read: ViewContainerRef, static: true })
   protected bladeContent: ViewContainerRef;
 
   public constructor(
