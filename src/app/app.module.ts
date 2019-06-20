@@ -1,6 +1,5 @@
 import { NgModule, Injector, ComponentFactoryResolver } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -28,7 +27,6 @@ const APP_ROUTES = RouterModule.forRoot([
 @NgModule({
   imports: [
     BrowserModule,
-    HttpModule,
     BladerModule,
     APP_ROUTES
   ],

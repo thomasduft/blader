@@ -106,16 +106,15 @@ export class BladeComponent implements OnInit, OnDestroy {
   protected bladeContent: ViewContainerRef;
 
   public constructor(
-    private _mgr: BladeManager
+    private _mgr: BladeManager,
+    private _resolver: ComponentFactoryResolver
   ) { }
 
   public ngOnInit(): void {
     if (this.context) {
       const factory = this.context.metaData.factoryFn
         ? this.context.metaData.factoryFn()
-        : this.bladeContent.injector
-          .get(ComponentFactoryResolver)
-          .resolveComponentFactory(this.context.metaData.component);
+        : this._resolver.resolveComponentFactory(this.context.metaData.component);
 
       this._componentRef = this.bladeContent
         .createComponent(factory, this.bladeContent.length);

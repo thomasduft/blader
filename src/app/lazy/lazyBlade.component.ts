@@ -22,9 +22,12 @@ export class LazyBladeComponent implements Blade {
   ) { }
 
   public clicked(key: string): void {
-    this._mgr.add(key, [
-      { key: 'viewDefId', value: 'ProductViewDef' },
-      { key: 'objKey', value: 'Product(1)' }
-    ]);
+    this._mgr.addWithParams({
+      key,
+      params: [
+        { key: 'viewDefId', value: 'ProductViewDef' },
+        { key: 'objKey', value: 'Product(1)' }
+      ]
+    });
   }
 }

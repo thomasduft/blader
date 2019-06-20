@@ -60,7 +60,9 @@ export class BladerComponent implements OnInit, OnDestroy {
         if (this._mgr.mustRestore) {
           this._mgr.restore();
         } else {
-          this._mgr.add(params.entry);
+          this._mgr.addWithParams({
+            key: params.entry
+          });
         }
         this._entryComponentId = this._mgr.entryId;
       });

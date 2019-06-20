@@ -32,11 +32,6 @@ export class BladeManager {
     private _registry: BladeRegistry
   ) { }
 
-  public add(key: string, params?: Array<BladeParam>, id?: number): number {
-    // check whether key exists in registry!
-    return this.addInternal(key, id, params);
-  }
-
   public addWithParams(params: BladeCreationParams) {
     return this.addInternal(params.key, params.id, params.params, params.state);
   }
@@ -51,7 +46,11 @@ export class BladeManager {
         this.entryId = b.id;
       }
       if (!b.metaData.isLazy) {
-        this.add(b.metaData.key, b.params, b.id);
+        this.addWithParams({
+          key: b.metaData.key,
+          params: b.params,
+          id: b.id
+        });
       }
     });
   }

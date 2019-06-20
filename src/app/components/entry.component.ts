@@ -25,16 +25,22 @@ export class EntryComponent implements Blade {
 
   public clicked(key: string): void {
     if (key === 'list') {
-      this._mgr.add(key, [
-        { key: 'viewDefId', value: 'ProductListViewDef' }
-      ]);
+      this._mgr.addWithParams({
+        key,
+        params: [
+          { key: 'viewDefId', value: 'ProductListViewDef' }
+        ]
+      });
     } else if (key === 'lazy') {
-      this._mgr.add(key);
+      this._mgr.addWithParams({ key });
     } else {
-      this._mgr.add(key, [
-        { key: 'viewDefId', value: 'ProductViewDef' },
-        { key: 'objKey', value: 'Product(1)' }
-      ]);
+      this._mgr.addWithParams({
+        key,
+        params: [
+          { key: 'viewDefId', value: 'ProductViewDef' },
+          { key: 'objKey', value: 'Product(1)' }
+        ]
+      });
     }
   }
 }
