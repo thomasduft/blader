@@ -21,7 +21,7 @@ const APP_ROUTES = RouterModule.forRoot([
   { path: 'home', component: HomeComponent },
   { path: 'list', component: ListComponent },
   { path: 'detail', component: DetailComponent },
-  { path: 'lazy', loadChildren: './lazy/lazy.module#LazyModule' }
+  { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule) }
 ], { preloadingStrategy: PreloadAllModules });
 
 @NgModule({
