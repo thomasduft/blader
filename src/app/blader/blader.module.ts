@@ -29,6 +29,9 @@ const BLADER_ROUTES = [
     BladerComponent,
     BladeComponent
   ],
+  exports: [
+    BladerComponent
+  ],
   providers: [
     BladeManager,
     CanDeactivateBladerComponent

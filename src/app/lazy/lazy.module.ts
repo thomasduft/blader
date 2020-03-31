@@ -17,9 +17,6 @@ const LAZY_ROUTES = [
   declarations: [
     LazyBladeComponent
   ],
-  entryComponents: [
-    LazyBladeComponent
-  ],
   exports: [
     LazyBladeComponent
   ]

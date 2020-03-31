@@ -1,4 +1,4 @@
-import { NgModule, Injector, ComponentFactoryResolver } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 
@@ -38,9 +38,6 @@ const APP_ROUTES = RouterModule.forRoot([
     EntryComponent,
     ListComponent,
     DetailComponent
-  ],
-  entryComponents: [
-    EntryComponent
   ],
   bootstrap: [AppComponent]
 })

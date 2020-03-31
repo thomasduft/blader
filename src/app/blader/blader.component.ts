@@ -7,7 +7,8 @@ import {
   OnInit,
   OnDestroy,
   ViewChildren,
-  QueryList
+  QueryList,
+  Input
 } from '@angular/core';
 import {
   ActivatedRoute,
@@ -29,6 +30,7 @@ import { BladeComponent } from './blade.component';
     BladeManager
   ],
   template: `
+  <ng-content></ng-content>
   <tw-blade
     *ngFor="let ctx of bladeContexts"
     [context]="ctx"
@@ -43,6 +45,9 @@ export class BladerComponent implements OnInit, OnDestroy {
 
   @ViewChildren(BladeComponent)
   private _blades: QueryList<BladeComponent>;
+
+  @Input()
+  public entry = '';
 
   public get bladeContexts(): Array<BladeContext> {
     return this._mgr.blades;
@@ -60,12 +65,12 @@ export class BladerComponent implements OnInit, OnDestroy {
         if (this._mgr.mustRestore) {
           this._mgr.restore();
         } else {
-          this._mgr.addWithParams({
-            key: params.entry
-          });
+          this.initEntryBlade(params.entry);
         }
         this._entryComponentId = this._mgr.entryId;
       });
+
+    this.initEntryBlade(this.entry);
   }
 
   public ngOnDestroy(): void {
@@ -105,6 +110,12 @@ export class BladerComponent implements OnInit, OnDestroy {
     return blades.filter((b: BladeComponent) => {
       return b.isDirty;
     });
+  }
+
+  public initEntryBlade(entryBlade: string): void {
+    if (entryBlade === undefined || entryBlade === '') { return; }
+
+    this._mgr.addWithParams({ key: entryBlade });
   }
 }
 
