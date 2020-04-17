@@ -41,7 +41,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -110,5 +109,8 @@
     "@schematics/angular:directive": {
       "prefix": "tw"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
