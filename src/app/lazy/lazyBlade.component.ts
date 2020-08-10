@@ -10,6 +10,7 @@ import {
   template: `
   <h1>Hello from lazy blade!</h1>
   <button type="button" (click)="clicked('detail')">Detail</button>
+  <p>{{id}}</p>
   `
 })
 export class LazyBladeComponent implements Blade {

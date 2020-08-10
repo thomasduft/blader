@@ -16,6 +16,10 @@ import {
   <p>
     <button type="button" *ngIf="isDirty" (click)="cancel()">Cancel changes</button>
   </p>
+  <p>
+    <input type="text" #goto placeholder="enter id of blade..." />
+    <button (click)="select(goto.value)">go to</button>
+  </p>
   `
 })
 export class DetailComponent implements Blade, OnInit {
@@ -42,5 +46,9 @@ export class DetailComponent implements Blade, OnInit {
 
   public cancel(): void {
     this.isDirty = false;
+  }
+
+  public select(id: string): void {
+    this._mgr.select(Number.parseFloat(id));
   }
 }

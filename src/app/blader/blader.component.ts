@@ -33,6 +33,7 @@ import { BladeComponent } from './blade.component';
   <ng-content></ng-content>
   <tw-blade
     *ngFor="let ctx of bladeContexts"
+    [attr.id]="ctx.id"
     [context]="ctx"
     (stateChanged)="stateChanged($event)"
     (selected)="selectBlade($event)"
@@ -70,6 +71,12 @@ export class BladerComponent implements OnInit, OnDestroy {
         this._entryComponentId = this._mgr.entryId;
       });
 
+    this._mgr.afterSelected$
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(() => {
+        this.scrollIntoView();
+      });
+
     this.initEntryBlade(this.entry);
   }
 
@@ -84,6 +91,8 @@ export class BladerComponent implements OnInit, OnDestroy {
     if (this._mgr.selected) {
       console.log(`state of blade ${this._mgr.selected.metaData.key} changed: ${state}`);
     }
+
+    this.scrollIntoView();
   }
 
   public selectBlade(args: BladeArgs): void {
@@ -112,10 +121,20 @@ export class BladerComponent implements OnInit, OnDestroy {
     });
   }
 
-  public initEntryBlade(entryBlade: string): void {
+  private initEntryBlade(entryBlade: string): void {
     if (entryBlade === undefined || entryBlade === '') { return; }
 
     this._mgr.addWithParams({ key: entryBlade });
+  }
+
+  private scrollIntoView(): void {
+    setTimeout(() => {
+      this._blades.forEach((blade: BladeComponent) => {
+        if (blade.isSelected) {
+          blade.element.nativeElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
   }
 }
 

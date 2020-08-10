@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 import {
   BladeParam,
@@ -19,6 +19,8 @@ export class BladeManager {
   public entryId: number;
 
   public selected: BladeContext | undefined;
+
+  public afterSelected$: EventEmitter<number> = new EventEmitter<number>();
 
   public get blades(): Array<BladeContext> {
     return this._blades;
@@ -86,6 +88,8 @@ export class BladeManager {
 
   public select(id: number): void {
     this.selected = this.get(id);
+
+    this.afterSelected$.next(this.selected.id);
   }
 
   public selectPrevious(): void {

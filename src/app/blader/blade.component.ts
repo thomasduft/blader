@@ -9,7 +9,8 @@ import {
   ViewContainerRef,
   ViewChild,
   ComponentFactoryResolver,
-  HostListener
+  HostListener,
+  ElementRef
 } from '@angular/core';
 
 import {
@@ -62,6 +63,10 @@ export class BladeComponent implements OnInit, OnDestroy {
   @Output()
   public closed: EventEmitter<BladeArgs> = new EventEmitter<BladeArgs>();
 
+  public get id(): number {
+    return this._componentRef.instance.id;
+  }
+
   public get title(): string {
     return this._componentRef.instance.title;
   }
@@ -107,7 +112,8 @@ export class BladeComponent implements OnInit, OnDestroy {
 
   public constructor(
     private _mgr: BladeManager,
-    private _resolver: ComponentFactoryResolver
+    private _resolver: ComponentFactoryResolver,
+    public element: ElementRef
   ) { }
 
   public ngOnInit(): void {
