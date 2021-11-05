@@ -8,7 +8,6 @@ import {
   ComponentRef,
   ViewContainerRef,
   ViewChild,
-  ComponentFactoryResolver,
   HostListener,
   ElementRef
 } from '@angular/core';
@@ -17,7 +16,8 @@ import {
   BladeContext,
   BladeArgs,
   BladeState,
-  BladeParamConstants
+  BladeParamConstants,
+  Blade
 } from './models';
 import { BladeManager } from './bladeManager.service';
 
@@ -112,18 +112,16 @@ export class BladeComponent implements OnInit, OnDestroy {
 
   public constructor(
     private _mgr: BladeManager,
-    private _resolver: ComponentFactoryResolver,
     public element: ElementRef
   ) { }
 
   public ngOnInit(): void {
     if (this.context) {
-      const factory = this.context.metaData.factoryFn
-        ? this.context.metaData.factoryFn()
-        : this._resolver.resolveComponentFactory(this.context.metaData.component);
+      // const factory = this.context.metaData.factoryFn
+      //   ? this.context.metaData.factoryFn()
+      //   : this._resolver.resolveComponentFactory(this.context.metaData.component);
 
-      this._componentRef = this.bladeContent
-        .createComponent(factory, this.bladeContent.length);
+      this._componentRef = this.bladeContent.createComponent<Blade>(this.context.metaData.component);
       this._componentRef.instance.id = this.context.id;
 
       this.setBladeStateIfAvailable();

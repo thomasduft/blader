@@ -47,13 +47,12 @@ export class BladeManager {
       if (b.isEntry) {
         this.entryId = b.id;
       }
-      if (!b.metaData.isLazy) {
-        this.addWithParams({
-          key: b.metaData.key,
-          params: b.params,
-          id: b.id
-        });
-      }
+
+      this.addWithParams({
+        key: b.metaData.key,
+        params: b.params,
+        id: b.id
+      });
     });
   }
 

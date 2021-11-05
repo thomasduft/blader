@@ -55,15 +55,10 @@ export class BladeContext {
 }
 
 export class BladeMetaData {
-  public isLazy = false;
-
   public constructor(
     public key: string,
     public component: Type<any>,
-    public factoryFn?: Function
-  ) {
-    this.isLazy = this.factoryFn !== undefined;
-  }
+  ) { }
 }
 
 export class BladeParamConstants {
