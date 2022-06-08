@@ -93,7 +93,6 @@
       }
     }
   },
-  "defaultProject": "blader",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "tw",

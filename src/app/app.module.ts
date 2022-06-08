@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, PreloadAllModules } from '@angular/router';
+import { RouterModule, PreloadAllModules, Route } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { SidebarComponent, WorkspaceComponent } from './shared/index';
@@ -16,19 +16,17 @@ import {
   BladeMetaData
 } from './blader/index';
 
-const APP_ROUTES = RouterModule.forRoot([
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'list', component: ListComponent },
-  { path: 'detail', component: DetailComponent },
-  { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule) }
-], { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' });
-
 @NgModule({
   imports: [
     BrowserModule,
     BladerModule,
-    APP_ROUTES
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'list', component: ListComponent },
+      { path: 'detail', component: DetailComponent },
+      { path: 'lazy', loadChildren: () => import('./lazy/lazy.module').then(m => m.LazyModule) }
+    ], { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' })
   ],
   declarations: [
     AppComponent,
