@@ -83,7 +83,7 @@ export class BladerComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this._mgr.reset();
 
-    this._unsubscribe.next();
+    this._unsubscribe.next(undefined);
     this._unsubscribe.complete();
   }
 
